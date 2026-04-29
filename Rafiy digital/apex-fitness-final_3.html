@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX — Elite Fitness Studio · New York City</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+:root {
+  --white:   #ffffff;
+  --off:     #f5f5f3;
+  --light:   #ebebeb;
+  --black:   #0a0a0a;
+  --dark:    #111111;
+  --volt:    #d4ff00;
+  --volt-d:  #b8df00;
+  --red:     #ff2b2b;
+  --gray:    #888888;
+  --lgray:   #cccccc;
+  --border:  #e0e0e0;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-track { background: var(--white); }
+::-webkit-scrollbar-thumb { background: var(--volt); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:500;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  background: var(--white);
+  border-bottom: 2px solid var(--black);
+}
+.nav-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px; font-weight: 900;
+  letter-spacing: 0.12em; color: var(--black);
+  text-decoration: none; display:flex; align-items:baseline; gap:8px;
+}
+.nav-logo-tag {
+  font-size: 9px; font-weight: 400; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--gray);
+}
+.nav-links { display:flex; gap:28px; list-style:none; align-items:center; }
+.nav-links a {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--black);
+  text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gray); }
+.nav-join {
+  background: var(--volt) !important;
+  color: var(--black) !important;
+  padding: 9px 20px;
+  font-weight: 700 !important;
+  transition: background 0.2s !important;
+  border: 2px solid var(--black) !important;
+}
+.nav-join:hover { background: var(--volt-d) !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 68px;
+  position: relative; overflow: hidden;
+}
+.hero-left {
+  background: var(--black);
+  padding: 80px 56px 64px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+.hero-left::after { content: none; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--volt);
+  padding: 6px 14px; width: fit-content;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--black);
+  animation: fadeIn 0.5s 0.1s both;
+}
+.hero-main { }
+.hero-h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(80px, 11vw, 160px);
+  font-weight: 900; line-height: 0.9;
+  color: var(--white); letter-spacing: 0.01em;
+  text-transform: uppercase;
+  animation: fadeIn 0.6s 0.3s both;
+}
+.hero-h1 span { color: var(--volt); display: block; }
+.hero-sub {
+  font-size: 15px; line-height: 1.8;
+  color: rgba(255,255,255,0.45);
+  font-weight: 300; max-width: 400px;
+  margin-top: 28px; margin-bottom: 40px;
+  animation: fadeIn 0.6s 0.5s both;
+}
+.hero-btns { display:flex; gap:12px; animation: fadeIn 0.6s 0.7s both; }
+.btn {
+  display: inline-block; text-decoration: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 14px 30px; transition: all 0.2s;
+  border: 2px solid transparent;
+}
+.btn-volt { background: var(--volt); color: var(--black); border-color: var(--volt); }
+.btn-volt:hover { background: var(--volt-d); border-color: var(--volt-d); transform: translateY(-2px); }
+.btn-white-outline { background: transparent; color: var(--white); border-color: rgba(255,255,255,0.3); }
+.btn-white-outline:hover { border-color: var(--volt); color: var(--volt); }
+.btn-black { background: var(--black); color: var(--white); border-color: var(--black); }
+.btn-black:hover { background: var(--dark); transform: translateY(-2px); }
+.btn-outline-black { background: transparent; color: var(--black); border: 2px solid var(--black); }
+.btn-outline-black:hover { background: var(--black); color: var(--white); }
+
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 0; border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 56px;
+  animation: fadeIn 0.6s 0.9s both;
+}
+.hero-stat { padding: 20px 0; border-right: 1px solid rgba(255,255,255,0.08); }
+.hero-stat:last-child { border-right: none; }
+.hero-stat-n {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 40px; font-weight: 900; letter-spacing: 0.02em;
+  color: var(--volt); line-height: 1; margin-bottom: 4px;
+}
+.hero-stat-l {
+  font-size: 10px; font-weight: 400; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+}
+
+/* hero right — image */
+.hero-right { position: relative; overflow: hidden; }
+.hero-right img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: center top;
+  filter: contrast(1.08) saturate(0.85);
+  transition: transform 8s ease;
+}
+.hero-right:hover img { transform: scale(1.04); }
+.hero-right-overlay {
+  position: absolute; inset:0;
+  background: linear-gradient(to left, transparent 30%, rgba(10,10,10,0.4) 65%, var(--black) 100%),
+              linear-gradient(to top, rgba(10,10,10,0.5) 0%, transparent 40%);
+}
+.hero-right-label {
+  position: absolute; bottom: 28px; right: 28px;
+  background: var(--volt);
+  padding: 10px 18px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--black);
+}
+
+@keyframes fadeIn {
+  from { opacity:0; transform: translateY(20px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ── TICKER ── */
+.ticker {
+  background: var(--volt); overflow: hidden;
+  border-top: 2px solid var(--black);
+  border-bottom: 2px solid var(--black);
+  padding: 12px 0;
+}
+.ticker-track {
+  display: flex; animation: ticker 20s linear infinite;
+  width: max-content;
+}
+@keyframes ticker {
+  from { transform:translateX(0); }
+  to   { transform:translateX(-50%); }
+}
+.ticker-item {
+  display: flex; align-items: center; gap: 24px; padding: 0 24px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--black); white-space: nowrap;
+}
+.ticker-sep { font-size: 18px; color: rgba(0,0,0,0.3); }
+
+/* ── LAYOUT ── */
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 48px; }
+
+.stag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.35em;
+  text-transform: uppercase; color: var(--gray);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+}
+.stag::before { content:''; width:24px; height:2px; background: var(--volt); }
+
+.h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(44px, 5vw, 72px);
+  font-weight: 900; line-height: 0.95;
+  text-transform: uppercase; color: var(--black);
+  letter-spacing: 0.01em; margin-bottom: 16px;
+}
+.h2-white { color: var(--white); }
+.h2 em { font-style: italic; color: var(--volt); }
+.h2-white em { color: var(--volt); }
+
+/* ── ABOUT ── */
+.about { padding: 120px 0; border-bottom: 2px solid var(--black); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; margin-top:60px; }
+.about-img { position:relative; }
+.about-img img { width:100%; height:520px; object-fit:cover; object-position:center; display:block; }
+.about-img-badge {
+  position: absolute; top:-18px; right:-18px;
+  background: var(--volt);
+  width: 110px; height: 110px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  border: 2px solid var(--black);
+}
+.about-img-badge-n {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 38px; font-weight: 900; color: var(--black); line-height:1;
+}
+.about-img-badge-l {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; color: rgba(0,0,0,0.6);
+}
+.about-text p {
+  font-size: 15.5px; line-height: 1.85;
+  color: #555; font-weight: 300; margin-bottom: 18px;
+}
+.about-text p strong { font-weight: 600; color: var(--black); }
+.about-pills { display:flex; flex-wrap:wrap; gap:8px; margin-top:28px; }
+.pill {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border: 2px solid var(--black);
+  color: var(--black);
+  transition: all 0.2s;
+}
+.pill:hover { background: var(--volt); border-color: var(--volt); }
+
+/* ── CLASSES ── */
+.classes { background: var(--black); padding: 120px 0; }
+.classes-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 2px; margin-top: 60px;
+}
+.class-card {
+  position: relative; overflow: hidden;
+  height: 440px; cursor: pointer;
+}
+.class-card img {
+  width:100%; height:100%; object-fit:cover;
+  filter: brightness(0.5) contrast(1.1) saturate(0.7);
+  transition: transform 0.6s ease, filter 0.4s;
+}
+.class-card:hover img { transform:scale(1.07); filter:brightness(0.35) contrast(1.1) saturate(0.7); }
+.class-overlay {
+  position:absolute; inset:0;
+  background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, transparent 55%);
+}
+.class-content {
+  position:absolute; bottom:0; left:0; right:0;
+  padding: 32px 28px;
+}
+.class-tag {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:10px; font-weight:700; letter-spacing:0.3em;
+  text-transform:uppercase; color:var(--volt);
+  margin-bottom:8px;
+}
+.class-name {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:34px; font-weight:900; line-height:0.95;
+  text-transform:uppercase; color:var(--white);
+  margin-bottom:10px; letter-spacing:0.02em;
+}
+.class-desc {
+  font-size:13px; color:rgba(255,255,255,0.5);
+  font-weight:300; line-height:1.65;
+  max-height:0; overflow:hidden;
+  transition:max-height 0.4s ease, opacity 0.4s;
+  opacity:0;
+}
+.class-card:hover .class-desc { max-height:80px; opacity:1; }
+.class-duration {
+  margin-top:16px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px; font-weight:600; letter-spacing:0.2em;
+  text-transform:uppercase; color:rgba(255,255,255,0.35);
+}
+
+/* ── SCHEDULE ── */
+.schedule { padding: 120px 0; border-bottom: 2px solid var(--black); }
+.schedule-table { margin-top:60px; width:100%; border-collapse:collapse; }
+.schedule-table th {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px; font-weight:700; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--gray);
+  padding:0 0 16px 0; text-align:left;
+  border-bottom:2px solid var(--black);
+}
+.schedule-table tr { border-bottom:1px solid var(--border); }
+.schedule-table tr:hover { background:var(--off); }
+.schedule-table td {
+  padding:18px 0; font-size:14.5px;
+  color:var(--black); font-weight:400;
+  vertical-align:middle;
+}
+.sched-time {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:16px; font-weight:700; color:var(--black);
+  letter-spacing:0.05em; min-width:100px;
+}
+.sched-class {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:20px; font-weight:800; letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+.sched-instructor { color:var(--gray); font-size:13px; font-weight:300; }
+.sched-spots {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px; font-weight:700; letter-spacing:0.14em;
+  text-transform:uppercase;
+}
+.spots-open { color:#22c55e; }
+.spots-few   { color:#f59e0b; }
+.spots-full  { color:var(--red); }
+.sched-book {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px; font-weight:700; letter-spacing:0.2em;
+  text-transform:uppercase;
+  background:var(--volt); color:var(--black);
+  border:none; padding:8px 18px; cursor:pointer;
+  transition:background 0.2s;
+}
+.sched-book:hover { background:var(--volt-d); }
+.sched-book:disabled { background:var(--light); color:var(--lgray); cursor:not-allowed; }
+
+/* ── TRAINERS ── */
+.trainers { background: var(--black); padding: 120px 0; }
+.trainers-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:60px; }
+.trainer-card { position:relative; overflow:hidden; }
+.trainer-card img {
+  width:100%; height:480px; object-fit:cover; object-position:center top;
+  filter:grayscale(100%) contrast(1.1);
+  transition: filter 0.5s, transform 0.5s;
+  display:block;
+}
+.trainer-card:hover img { filter:grayscale(0%) contrast(1.05); transform:scale(1.03); }
+.trainer-info {
+  padding: 24px 20px; background: var(--dark);
+  border-top: 3px solid var(--volt);
+}
+.trainer-name {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:26px; font-weight:900; text-transform:uppercase;
+  letter-spacing:0.04em; color:var(--white); margin-bottom:4px;
+}
+.trainer-role {
+  font-size:11px; font-weight:400; letter-spacing:0.18em;
+  text-transform:uppercase; color:var(--volt); margin-bottom:12px;
+}
+.trainer-specs { display:flex; flex-wrap:wrap; gap:6px; }
+.trainer-spec {
+  font-size:10px; font-weight:600; letter-spacing:0.12em;
+  text-transform:uppercase; color:rgba(255,255,255,0.4);
+  border:1px solid rgba(255,255,255,0.1); padding:4px 9px;
+}
+
+/* ── PRICING ── */
+.pricing { padding: 120px 0; }
+.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:60px; }
+.plan {
+  border: 2px solid var(--black);
+  padding: 48px 36px; position:relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.plan:hover { transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,0.12); }
+.plan-featured {
+  background: var(--black); color: var(--white);
+  border-color: var(--black);
+}
+.plan-badge {
+  position:absolute; top:-2px; left:50%; transform:translateX(-50%);
+  background:var(--volt); color:var(--black);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:10px; font-weight:700; letter-spacing:0.2em;
+  text-transform:uppercase; padding:5px 16px;
+  white-space:nowrap;
+}
+.plan-name {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px; font-weight:700; letter-spacing:0.28em;
+  text-transform:uppercase; color:var(--gray);
+  margin-bottom:16px;
+}
+.plan-featured .plan-name { color:rgba(255,255,255,0.45); }
+.plan-price {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:72px; font-weight:900; line-height:1;
+  color:var(--black); letter-spacing:-0.02em; margin-bottom:4px;
+}
+.plan-featured .plan-price { color:var(--volt); }
+.plan-period { font-size:13px; color:var(--gray); margin-bottom:32px; font-weight:300; }
+.plan-featured .plan-period { color:rgba(255,255,255,0.35); }
+.plan-features { display:flex; flex-direction:column; gap:13px; margin-bottom:36px; }
+.plan-feature {
+  display:flex; align-items:center; gap:12px;
+  font-size:14px; font-weight:300; color:#333;
+}
+.plan-featured .plan-feature { color:rgba(255,255,255,0.65); }
+.plan-feature::before {
+  content:''; width:18px; height:2px; background:var(--volt); flex-shrink:0;
+}
+
+/* ── TESTIMONIALS ── */
+.testi { background:var(--off); padding:120px 0; border-top:2px solid var(--black); border-bottom:2px solid var(--black); }
+.testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:60px; }
+.tcard {
+  background:var(--white); padding:40px 32px;
+  border:1px solid var(--border); transition:border-color 0.25s;
+}
+.tcard:hover { border-color:var(--black); }
+.tcard-quote {
+  font-size:52px; line-height:1; color:var(--volt);
+  font-family:'Barlow Condensed',sans-serif; font-weight:900;
+  margin-bottom:16px;
+}
+.tcard-text {
+  font-size:15px; line-height:1.8; color:#333;
+  font-weight:300; margin-bottom:24px; font-style:italic;
+}
+.tcard-author {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px; font-weight:700; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--black); margin-bottom:2px;
+}
+.tcard-detail { font-size:12px; color:var(--gray); font-weight:300; }
+
+/* ── CONTACT ── */
+.contact { padding:120px 0; }
+.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; margin-top:60px; }
+.contact-info { display:flex; flex-direction:column; gap:0; }
+.ci {
+  display:flex; gap:16px; align-items:flex-start;
+  padding:24px 0; border-bottom:1px solid var(--border);
+}
+.ci:last-of-type { border-bottom:none; }
+.ci-icon {
+  width:44px; height:44px; background:var(--volt);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; flex-shrink:0; border:2px solid var(--black);
+}
+.ci-lbl {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:10px; font-weight:700; letter-spacing:0.25em;
+  text-transform:uppercase; color:var(--gray); margin-bottom:4px;
+}
+.ci-val { font-size:14.5px; color:var(--black); line-height:1.65; font-weight:400; }
+.ci-val a { color:inherit; text-decoration:none; }
+
+/* contact form */
+.cform { display:flex; flex-direction:column; gap:14px; }
+.cf { display:flex; flex-direction:column; gap:6px; }
+.cf label {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:10px; font-weight:700; letter-spacing:0.25em;
+  text-transform:uppercase; color:var(--gray);
+}
+.cf input, .cf select, .cf textarea {
+  background:var(--white); border:2px solid var(--black);
+  padding:12px 15px; font-size:14px; color:var(--black);
+  font-family:'Barlow',sans-serif; font-weight:400;
+  outline:none; transition:border-color 0.2s; width:100%;
+}
+.cf input:focus, .cf select:focus, .cf textarea:focus { border-color:var(--volt); }
+.cf input::placeholder, .cf textarea::placeholder { color:var(--lgray); }
+.cf textarea { height:110px; resize:none; }
+.cf-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.csub {
+  background:var(--black); color:var(--white); border:2px solid var(--black);
+  padding:15px 36px; font-family:'Barlow Condensed',sans-serif;
+  font-size:12px; font-weight:700; letter-spacing:0.22em;
+  text-transform:uppercase; cursor:pointer; transition:all 0.2s;
+  align-self:flex-start;
+}
+.csub:hover { background:var(--volt); color:var(--black); border-color:var(--volt); }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--black);
+  border-top:3px solid var(--volt);
+  padding:60px 48px 28px;
+}
+.footer-top {
+  display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px; padding-bottom:48px;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+  margin-bottom:24px;
+}
+.footer-brand-name {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:48px; font-weight:900; letter-spacing:0.08em;
+  color:var(--white); line-height:1; margin-bottom:6px;
+}
+.footer-brand-tag {
+  font-size:9px; letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--volt); font-weight:500; margin-bottom:20px;
+}
+.footer-brand-desc {
+  font-size:13.5px; color:rgba(255,255,255,0.28);
+  font-weight:300; line-height:1.75;
+}
+.footer-col-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:10px; font-weight:700; letter-spacing:0.28em;
+  text-transform:uppercase; color:rgba(255,255,255,0.2); margin-bottom:18px;
+}
+.footer-links { display:flex; flex-direction:column; gap:11px; }
+.footer-links a {
+  font-size:13.5px; color:rgba(255,255,255,0.35);
+  text-decoration:none; font-weight:300; transition:color 0.2s;
+}
+.footer-links a:hover { color:var(--volt); }
+.footer-bottom {
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+}
+.footer-copy { font-size:11px; color:rgba(255,255,255,0.18); }
+.footer-social { display:flex; gap:16px; }
+.footer-social a {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:10.5px; font-weight:700; letter-spacing:0.18em;
+  text-transform:uppercase; color:rgba(255,255,255,0.25);
+  text-decoration:none; transition:color 0.2s;
+}
+.footer-social a:hover { color:var(--volt); }
+
+/* ── REVEAL ── */
+.rv { opacity:0; transform:translateY(24px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.rv.on { opacity:1; transform:translateY(0); }
+.rv-d1 { transition-delay:0.1s; }
+.rv-d2 { transition-delay:0.2s; }
+
+/* ── MOBILE ── */
+@media (max-width:860px) {
+  nav { padding:0 20px; }
+  .nav-links { display:none; }
+  .hero { grid-template-columns:1fr; min-height:auto; }
+  .hero-right { height:300px; }
+  .hero-left { padding:48px 24px; }
+  .about-grid, .contact-grid { grid-template-columns:1fr; gap:40px; }
+  .classes-grid, .trainers-grid, .testi-grid { grid-template-columns:1fr; }
+  .pricing-grid { grid-template-columns:1fr; gap:16px; }
+  .wrap { padding:0 22px; }
+  .about, .schedule, .pricing, .testi, .contact { padding:80px 0; }
+  .classes, .trainers { padding:80px 0; }
+  .cf-row { grid-template-columns:1fr; }
+  footer { padding:44px 22px 24px; }
+  .footer-top { grid-template-columns:1fr 1fr; }
+  .schedule-table { font-size:12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    APEX
+    <span class="nav-logo-tag">Elite Fitness · NYC</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#trainers">Trainers</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-join">Join Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">⚡ New York City's #1 Rated Studio · 2024</div>
+    <div class="hero-main">
+      <div class="hero-h1">
+        TRAIN<br>
+        <span>HARDER.</span>
+      </div>
+      <p class="hero-sub">APEX is New York's most results-driven fitness studio. No gimmicks. No excuses. Just elite coaching, science-backed programming, and a community that pushes you past what you thought possible.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-volt">Start Free Trial</a>
+        <a href="#classes" class="btn btn-white-outline">View Classes</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-n">4,200+</div>
+        <div class="hero-stat-l">Active Members</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-n">98%</div>
+        <div class="hero-stat-l">Retention Rate</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-n">12</div>
+        <div class="hero-stat-l">Elite Coaches</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=85&fit=crop" alt="APEX Gym" style="width:100%;height:100%;object-fit:cover;object-position:center;filter:contrast(1.08) saturate(0.85);">
+    <div class="hero-right-overlay"></div>
+    <div class="hero-right-label">Tribeca, Manhattan</div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">HIIT Training <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Strength & Conditioning <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Olympic Lifting <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Boxing & Combat <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Mobility & Recovery <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Nutrition Coaching <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Personal Training <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">HIIT Training <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Strength & Conditioning <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Olympic Lifting <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Boxing & Combat <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Mobility & Recovery <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Nutrition Coaching <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Personal Training <span class="ticker-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-img rv">
+        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=900&q=85&fit=crop" alt="APEX gym interior" style="width:100%;height:520px;object-fit:cover;object-position:center;display:block;">
+        <div class="about-img-badge">
+          <div class="about-img-badge-n">7</div>
+          <div class="about-img-badge-l">Years Strong</div>
+        </div>
+      </div>
+      <div class="rv rv-d1">
+        <div class="stag">Who We Are</div>
+        <h2 class="h2">Built for<br><em>Results.</em><br>Not Excuses.</h2>
+        <div class="about-text">
+          <p>APEX was founded in 2017 by <strong>former D1 athletes and certified strength coaches</strong> who were frustrated with fitness studios that prioritized aesthetics over outcomes. They built something different.</p>
+          <p>Our 12,000 sq ft Tribeca facility features <strong>competition-grade equipment</strong>, dedicated Olympic lifting platforms, a full boxing ring, and a recovery zone with cold plunge and sauna. Every inch is built with one purpose: to make you better.</p>
+          <p>We don't believe in one-size-fits-all. Every member gets a baseline assessment, a personalized programming track, and quarterly goal reviews with a dedicated coach.</p>
+        </div>
+        <div class="about-pills">
+          <span class="pill">12,000 sq ft Facility</span>
+          <span class="pill">Competition Equipment</span>
+          <span class="pill">Cold Plunge & Sauna</span>
+          <span class="pill">Nutrition Bar</span>
+          <span class="pill">Parking Available</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSES -->
+<section class="classes" id="classes">
+  <div class="wrap">
+    <div class="stag" style="color:rgba(255,255,255,0.35);">
+      <span style="background:var(--volt);"></span>
+      What We Offer
+    </div>
+    <h2 class="h2 h2-white rv">Our <em>Classes</em></h2>
+    <div class="classes-grid">
+      <div class="class-card rv">
+        <img src="https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?w=700&q=80&fit=crop" alt="HIIT" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.5) contrast(1.1) saturate(0.7);transition:transform 0.6s ease,filter 0.4s;" onmouseover="this.style.transform='scale(1.07)';this.style.filter='brightness(0.35) contrast(1.1) saturate(0.7)'" onmouseout="this.style.transform='scale(1)';this.style.filter='brightness(0.5) contrast(1.1) saturate(0.7)'">
+        <div class="class-overlay"></div>
+        <div class="class-content">
+          <div class="class-tag">High Intensity</div>
+          <div class="class-name">APEX<br>HIIT</div>
+          <div class="class-desc">45 minutes of interval-based training designed to maximize caloric burn and cardiovascular output. Science-backed intervals, coach-led, music-driven.</div>
+          <div class="class-duration">45 MIN · ALL LEVELS</div>
+        </div>
+      </div>
+      <div class="class-card rv rv-d1">
+        <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=700&q=80&fit=crop" alt="Strength" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.5) contrast(1.1) saturate(0.7);transition:transform 0.6s ease,filter 0.4s;" onmouseover="this.style.transform='scale(1.07)';this.style.filter='brightness(0.35) contrast(1.1) saturate(0.7)'" onmouseout="this.style.transform='scale(1)';this.style.filter='brightness(0.5) contrast(1.1) saturate(0.7)'">
+        <div class="class-overlay"></div>
+        <div class="class-content">
+          <div class="class-tag">Strength</div>
+          <div class="class-name">Power<br>Lift</div>
+          <div class="class-desc">Progressive overload programming focused on compound movements — squat, deadlift, press. Real strength built over time with expert coaching.</div>
+          <div class="class-duration">60 MIN · INTERMEDIATE</div>
+        </div>
+      </div>
+      <div class="class-card rv rv-d2">
+        <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=700&q=80&fit=crop" alt="Boxing" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.5) contrast(1.1) saturate(0.7);transition:transform 0.6s ease,filter 0.4s;" onmouseover="this.style.transform='scale(1.07)';this.style.filter='brightness(0.35) contrast(1.1) saturate(0.7)'" onmouseout="this.style.transform='scale(1)';this.style.filter='brightness(0.5) contrast(1.1) saturate(0.7)'">
+        <div class="class-overlay"></div>
+        <div class="class-content">
+          <div class="class-tag">Combat</div>
+          <div class="class-name">APEX<br>BOX</div>
+          <div class="class-desc">Authentic boxing technique meets elite conditioning. Full bag work, pad rounds with coaches, and footwork drills that build athleticism.</div>
+          <div class="class-duration">50 MIN · ALL LEVELS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule" id="schedule">
+  <div class="wrap">
+    <div class="stag rv">Today's Schedule</div>
+    <h2 class="h2 rv">Book Your <em>Spot</em></h2>
+    <table class="schedule-table rv">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Class</th>
+          <th>Instructor</th>
+          <th>Spots</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="sched-time">6:00 AM</div></td>
+          <td><div class="sched-class">APEX HIIT</div></td>
+          <td><div class="sched-instructor">Coach Marcus Webb</div></td>
+          <td><div class="sched-spots spots-open">12 Open</div></td>
+          <td><button class="sched-book">Book →</button></td>
+        </tr>
+        <tr>
+          <td><div class="sched-time">7:30 AM</div></td>
+          <td><div class="sched-class">Power Lift</div></td>
+          <td><div class="sched-instructor">Coach Aisha Torres</div></td>
+          <td><div class="sched-spots spots-few">3 Left</div></td>
+          <td><button class="sched-book">Book →</button></td>
+        </tr>
+        <tr>
+          <td><div class="sched-time">9:00 AM</div></td>
+          <td><div class="sched-class">APEX BOX</div></td>
+          <td><div class="sched-instructor">Coach Darius Cole</div></td>
+          <td><div class="sched-spots spots-full">Full</div></td>
+          <td><button class="sched-book" disabled>Full</button></td>
+        </tr>
+        <tr>
+          <td><div class="sched-time">12:00 PM</div></td>
+          <td><div class="sched-class">Power Lift</div></td>
+          <td><div class="sched-instructor">Coach Marcus Webb</div></td>
+          <td><div class="sched-spots spots-open">8 Open</div></td>
+          <td><button class="sched-book">Book →</button></td>
+        </tr>
+        <tr>
+          <td><div class="sched-time">5:30 PM</div></td>
+          <td><div class="sched-class">APEX HIIT</div></td>
+          <td><div class="sched-instructor">Coach Aisha Torres</div></td>
+          <td><div class="sched-spots spots-few">2 Left</div></td>
+          <td><button class="sched-book">Book →</button></td>
+        </tr>
+        <tr>
+          <td><div class="sched-time">7:00 PM</div></td>
+          <td><div class="sched-class">APEX BOX</div></td>
+          <td><div class="sched-instructor">Coach Darius Cole</div></td>
+          <td><div class="sched-spots spots-open">10 Open</div></td>
+          <td><button class="sched-book">Book →</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- TRAINERS -->
+<section class="trainers" id="trainers">
+  <div class="wrap">
+    <div class="stag" style="color:rgba(255,255,255,0.35);">The Coaches</div>
+    <h2 class="h2 h2-white rv">Elite <em>Trainers</em></h2>
+    <div class="trainers-grid">
+      <div class="trainer-card rv">
+        <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=600&q=85&fit=crop" alt="Coach Marcus Webb" style="width:100%;height:480px;object-fit:cover;object-position:center top;filter:grayscale(100%) contrast(1.1);transition:filter 0.5s,transform 0.5s;">
+        <div class="trainer-info">
+          <div class="trainer-name">Marcus Webb</div>
+          <div class="trainer-role">Head Coach · HIIT & Conditioning</div>
+          <div class="trainer-specs">
+            <span class="trainer-spec">NSCA-CSCS</span>
+            <span class="trainer-spec">D1 Track & Field</span>
+            <span class="trainer-spec">8 Yrs Coaching</span>
+          </div>
+        </div>
+      </div>
+      <div class="trainer-card rv rv-d1">
+        <img src="https://images.unsplash.com/photo-1609899537878-88d5ba429bdb?w=600&q=85&fit=crop" alt="Coach Aisha Torres" style="width:100%;height:480px;object-fit:cover;object-position:center top;filter:grayscale(100%) contrast(1.1);transition:filter 0.5s,transform 0.5s;">
+        <div class="trainer-info">
+          <div class="trainer-name">Aisha Torres</div>
+          <div class="trainer-role">Strength Lead · Olympic Lifting</div>
+          <div class="trainer-specs">
+            <span class="trainer-spec">USA Weightlifting</span>
+            <span class="trainer-spec">USAW L2</span>
+            <span class="trainer-spec">Former Competitor</span>
+          </div>
+        </div>
+      </div>
+      <div class="trainer-card rv rv-d2">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=85&fit=crop" alt="Coach Darius Cole" style="width:100%;height:480px;object-fit:cover;object-position:center top;filter:grayscale(100%) contrast(1.1);transition:filter 0.5s,transform 0.5s;">
+        <div class="trainer-info">
+          <div class="trainer-name">Darius Cole</div>
+          <div class="trainer-role">Boxing Lead · Combat Sports</div>
+          <div class="trainer-specs">
+            <span class="trainer-spec">Golden Gloves</span>
+            <span class="trainer-spec">NSCA-CPT</span>
+            <span class="trainer-spec">10 Yrs Pro Boxing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="stag rv">Membership</div>
+    <h2 class="h2 rv">Simple <em>Pricing</em></h2>
+    <div class="pricing-grid">
+      <div class="plan rv">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">$89</div>
+        <div class="plan-period">per month</div>
+        <div class="plan-features">
+          <div class="plan-feature">8 group classes / month</div>
+          <div class="plan-feature">App & schedule access</div>
+          <div class="plan-feature">Locker room access</div>
+          <div class="plan-feature">Member community</div>
+        </div>
+        <a href="#contact" class="btn btn-outline-black" style="display:block;text-align:center;">Get Started</a>
+      </div>
+      <div class="plan plan-featured rv rv-d1">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-name">Unlimited</div>
+        <div class="plan-price">$149</div>
+        <div class="plan-period">per month</div>
+        <div class="plan-features">
+          <div class="plan-feature">Unlimited group classes</div>
+          <div class="plan-feature">1 PT session / month</div>
+          <div class="plan-feature">Cold plunge & sauna</div>
+          <div class="plan-feature">Nutrition tracking access</div>
+          <div class="plan-feature">Guest pass (1/month)</div>
+        </div>
+        <a href="#contact" class="btn btn-volt" style="display:block;text-align:center;">Get Started</a>
+      </div>
+      <div class="plan rv rv-d2">
+        <div class="plan-name">Elite</div>
+        <div class="plan-price">$249</div>
+        <div class="plan-period">per month</div>
+        <div class="plan-features">
+          <div class="plan-feature">Everything in Unlimited</div>
+          <div class="plan-feature">4 PT sessions / month</div>
+          <div class="plan-feature">Custom program design</div>
+          <div class="plan-feature">Quarterly body comp test</div>
+          <div class="plan-feature">Priority class booking</div>
+        </div>
+        <a href="#contact" class="btn btn-outline-black" style="display:block;text-align:center;">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <div class="wrap">
+    <div class="stag rv">Real Results</div>
+    <h2 class="h2 rv">What Members <em>Say</em></h2>
+    <div class="testi-grid">
+      <div class="tcard rv">
+        <div class="tcard-quote">"</div>
+        <div class="tcard-text">I've been to every gym in Manhattan. APEX is in a different category. The coaching is elite, the programming is smart, and I've hit PRs every single month for the past year.</div>
+        <div class="tcard-author">Jordan Kim</div>
+        <div class="tcard-detail">Member since 2022 · Unlimited Plan</div>
+      </div>
+      <div class="tcard rv rv-d1">
+        <div class="tcard-quote">"</div>
+        <div class="tcard-text">Lost 28 pounds in 5 months. I've tried everything. What APEX does differently is they actually track your progress and adjust. It's not just showing up — it's a system.</div>
+        <div class="tcard-author">Marissa Chen</div>
+        <div class="tcard-detail">Member since 2023 · Elite Plan</div>
+      </div>
+      <div class="tcard rv rv-d2">
+        <div class="tcard-quote">"</div>
+        <div class="tcard-text">Coach Marcus changed my relationship with training. I came in as a complete beginner. Six months later I'm doing things I genuinely thought were impossible for me.</div>
+        <div class="tcard-author">Theo Okafor</div>
+        <div class="tcard-detail">Member since 2023 · Starter Plan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="stag rv">Get Started</div>
+    <h2 class="h2 rv">Start Your <em>Free Trial</em></h2>
+    <div class="contact-grid">
+      <div class="rv">
+        <div class="contact-info">
+          <div class="ci">
+            <div class="ci-icon">📍</div>
+            <div>
+              <div class="ci-lbl">Location</div>
+              <div class="ci-val">88 Leonard Street<br>Tribeca, New York 10013</div>
+            </div>
+          </div>
+          <div class="ci">
+            <div class="ci-icon">🕐</div>
+            <div>
+              <div class="ci-lbl">Hours</div>
+              <div class="ci-val">
+                Mon – Fri: 5:30am – 10:00pm<br>
+                Sat – Sun: 7:00am – 8:00pm
+              </div>
+            </div>
+          </div>
+          <div class="ci">
+            <div class="ci-icon">📞</div>
+            <div>
+              <div class="ci-lbl">Phone</div>
+              <div class="ci-val"><a href="tel:2125550142">(212) 555-0142</a></div>
+            </div>
+          </div>
+          <div class="ci">
+            <div class="ci-icon">✉️</div>
+            <div>
+              <div class="ci-lbl">Email</div>
+              <div class="ci-val"><a href="mailto:hello@apexnyc.com">hello@apexnyc.com</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rv rv-d1">
+        <div class="cform">
+          <div class="cf-row">
+            <div class="cf">
+              <label>First Name</label>
+              <input type="text" placeholder="Alex">
+            </div>
+            <div class="cf">
+              <label>Last Name</label>
+              <input type="text" placeholder="Johnson">
+            </div>
+          </div>
+          <div class="cf">
+            <label>Email</label>
+            <input type="email" placeholder="alex@email.com">
+          </div>
+          <div class="cf">
+            <label>Phone</label>
+            <input type="tel" placeholder="(212) 000-0000">
+          </div>
+          <div class="cf">
+            <label>I'm Interested In</label>
+            <select>
+              <option>Free 7-Day Trial</option>
+              <option>Starter Membership</option>
+              <option>Unlimited Membership</option>
+              <option>Elite Membership</option>
+              <option>Personal Training</option>
+              <option>Just Exploring</option>
+            </select>
+          </div>
+          <div class="cf">
+            <label>Your Goal</label>
+            <textarea placeholder="Tell us what you're working toward — we'll match you with the right coach and program."></textarea>
+          </div>
+          <button class="csub">Claim Free Trial →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">APEX</div>
+      <div class="footer-brand-tag">Elite Fitness · New York City · Est. 2017</div>
+      <div class="footer-brand-desc">New York's most results-driven fitness studio. Science-backed programming, elite coaching, real outcomes.</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <div class="footer-links">
+        <a href="#about">About APEX</a>
+        <a href="#classes">Classes</a>
+        <a href="#trainers">Our Coaches</a>
+        <a href="#pricing">Membership</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Hours</div>
+      <div class="footer-links">
+        <a href="#">Mon–Fri: 5:30am–10pm</a>
+        <a href="#">Sat–Sun: 7am–8pm</a>
+        <a href="#">Holidays: 8am–2pm</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Find Us</div>
+      <div class="footer-links">
+        <a href="#">88 Leonard Street</a>
+        <a href="#">Tribeca, NY 10013</a>
+        <a href="#">(212) 555-0142</a>
+        <a href="#">hello@apexnyc.com</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 APEX Fitness NYC LLC · All Rights Reserved</span>
+    <div class="footer-social">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">YouTube</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); });
+}, {threshold:0.07});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PORTER — New York City Steakhouse</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Bebas+Neue&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+:root {
+  --black:   #080808;
+  --char:    #111111;
+  --dark:    #1a1512;
+  --ember:   #c8602a;
+  --ember-l: #e07a44;
+  --gold:    #c9a96e;
+  --gold-l:  #e2c898;
+  --cream:   #f5efe3;
+  --white:   #ffffff;
+  --text:    rgba(245,239,227,0.82);
+  --text-dim:rgba(245,239,227,0.38);
+  --border:  rgba(201,169,110,0.15);
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--black);
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  position: fixed; top:0; left:0; z-index:9999;
+  width: 10px; height: 10px;
+  background: var(--ember);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  position: fixed; top:0; left:0; z-index:9998;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(201,169,110,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%,-50%);
+  transition: transform 0.18s ease, width 0.3s, height 0.3s;
+}
+body:hover .cursor { opacity:1; }
+
+/* ── GRAIN OVERLAY ── */
+body::before {
+  content:''; position:fixed; inset:0; z-index:9000;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; opacity:0.35;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:500;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 60px; height: 72px;
+  background: rgba(8,8,8,0); /* starts transparent */
+  transition: background 0.5s, border-color 0.5s;
+  border-bottom: 1px solid transparent;
+}
+nav.solid {
+  background: rgba(8,8,8,0.97);
+  border-color: var(--border);
+  backdrop-filter: blur(20px);
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px; letter-spacing: 0.18em;
+  color: var(--white); text-decoration: none;
+  display: flex; align-items: baseline; gap: 10px;
+}
+.nav-logo-sub {
+  font-family: 'Jost', sans-serif;
+  font-size: 9px; font-weight: 300;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); margin-left: 2px;
+}
+.nav-links { display:flex; gap:32px; list-style:none; align-items:center; }
+.nav-links a {
+  font-size: 11px; font-weight: 300; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5);
+  text-decoration: none; transition: color 0.25s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-reserve {
+  background: transparent !important;
+  border: 1px solid var(--ember) !important;
+  color: var(--ember) !important;
+  padding: 8px 20px;
+  transition: background 0.25s, color 0.25s !important;
+}
+.nav-reserve:hover {
+  background: var(--ember) !important;
+  color: var(--white) !important;
+}
+
+/* ── HERO ── */
+.hero {
+  height: 100vh; min-height: 700px;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-bg {
+  position: absolute; inset:0;
+  background-image: url('https://images.unsplash.com/photo-1544025162-d76694265947?w=1800&q=85');
+  background-size: cover; background-position: center;
+  filter: brightness(0.28) contrast(1.15) saturate(0.8);
+  transform: scale(1.06);
+  animation: heroZoom 14s ease-in-out infinite alternate;
+}
+@keyframes heroZoom {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1.0);  }
+}
+.hero-overlay {
+  position: absolute; inset:0;
+  background: radial-gradient(ellipse at center bottom, rgba(200,96,42,0.12) 0%, transparent 65%),
+              linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.2) 60%, rgba(8,8,8,0.5) 100%);
+}
+.hero-content {
+  position: relative; z-index:2;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+}
+.hero-eyebrow {
+  font-size: 10px; font-weight: 400; letter-spacing: 0.45em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 28px;
+  display: flex; align-items: center; gap: 18px;
+  animation: fadeUp 1s 0.2s both;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content:''; width:40px; height:1px; background: var(--gold); opacity:0.5;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(100px, 16vw, 220px);
+  letter-spacing: 0.06em; line-height: 0.88;
+  color: var(--white);
+  animation: fadeUp 1s 0.4s both;
+}
+.hero-title-sub {
+  font-family: 'Cormorant', serif;
+  font-size: clamp(18px, 2.5vw, 32px);
+  font-weight: 300; font-style: italic;
+  color: var(--gold-l); letter-spacing: 0.1em;
+  margin-top: 12px; margin-bottom: 48px;
+  animation: fadeUp 1s 0.6s both;
+}
+.hero-btns {
+  display: flex; gap: 16px;
+  animation: fadeUp 1s 0.8s both;
+}
+.btn {
+  display: inline-block; text-decoration: none;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  padding: 16px 36px; transition: all 0.3s;
+}
+.btn-ember { background: var(--ember); color: var(--white); }
+.btn-ember:hover { background: var(--ember-l); transform: translateY(-2px); }
+.btn-outline {
+  background: transparent; color: rgba(255,255,255,0.65);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+.hero-scroll {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 10px;
+  animation: fadeUp 1s 1.2s both;
+}
+.hero-scroll-text {
+  font-size: 8.5px; letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--text-dim); font-weight: 300;
+}
+.hero-scroll-line {
+  width: 1px; height: 48px; background: var(--gold); opacity: 0.4;
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0%   { transform: scaleY(0); transform-origin: top; opacity:0; }
+  50%  { transform: scaleY(1); transform-origin: top; opacity:0.4; }
+  100% { transform: scaleY(1); transform-origin: bottom; opacity:0; }
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(30px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  background: var(--ember); padding: 14px 0; overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.marquee-track {
+  display: flex; gap: 0;
+  animation: marquee 22s linear infinite;
+  width: max-content;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-item {
+  display: flex; align-items: center; gap: 28px;
+  padding: 0 28px; white-space: nowrap;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.28em;
+  text-transform: uppercase; color: rgba(255,255,255,0.85);
+}
+.marquee-dot { width:4px; height:4px; background: rgba(255,255,255,0.5); border-radius:50%; }
+
+/* ── SHARED ── */
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 60px; }
+
+.section-tag {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 9.5px; font-weight: 500; letter-spacing: 0.35em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 20px;
+}
+.section-tag::before { content:''; width:28px; height:1px; background:var(--gold); }
+
+.h2 {
+  font-family: 'Cormorant', serif;
+  font-size: clamp(40px, 4.5vw, 66px);
+  font-weight: 300; line-height: 1.1; color: var(--white);
+  margin-bottom: 18px;
+}
+.h2 em { font-style: italic; color: var(--gold-l); }
+
+/* ── EXPERIENCE ── */
+.experience { padding: 130px 0; }
+.exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 64px; }
+.exp-text p {
+  font-size: 15.5px; line-height: 1.95;
+  color: var(--text-dim); font-weight: 300; margin-bottom: 18px;
+}
+.exp-text p strong { color: var(--text); font-weight: 500; }
+.exp-divider {
+  width: 48px; height: 1px; background: var(--ember); margin: 32px 0;
+}
+.exp-signature {
+  font-family: 'Cormorant', serif;
+  font-size: 22px; font-style: italic; color: var(--gold);
+  font-weight: 300;
+}
+.exp-img-stack { position: relative; height: 560px; }
+.exp-img-main {
+  position: absolute; top:0; right:0;
+  width: 85%; height: 90%;
+  object-fit: cover; object-position: center;
+  filter: brightness(0.85) contrast(1.1);
+}
+.exp-img-accent {
+  position: absolute; bottom: 0; left: 0;
+  width: 55%; height: 55%;
+  object-fit: cover; object-position: center;
+  filter: brightness(0.9) contrast(1.05);
+  border: 4px solid var(--black);
+}
+.exp-year-badge {
+  position: absolute; top: 50%; right: -10px;
+  transform: translateY(-50%);
+  background: var(--ember);
+  padding: 18px 14px;
+  writing-mode: vertical-rl;
+  font-size: 9px; letter-spacing: 0.3em; font-weight: 500;
+  text-transform: uppercase; color: var(--white);
+}
+
+/* ── MENU ── */
+.menu-section { background: var(--dark); padding: 130px 0; }
+.menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 64px; }
+.menu-category { background: var(--char); padding: 52px 48px; }
+.menu-category-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px; letter-spacing: 0.3em;
+  color: var(--gold); margin-bottom: 32px;
+  display: flex; align-items: center; gap: 14px;
+}
+.menu-category-title::after { content:''; flex:1; height:1px; background:var(--border); }
+.menu-items { display: flex; flex-direction: column; gap: 0; }
+.menu-item {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: padding-left 0.25s;
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-item:hover { padding-left: 8px; }
+.menu-item-left { flex: 1; }
+.menu-item-name {
+  font-family: 'Cormorant', serif;
+  font-size: 19px; font-weight: 400; color: var(--white);
+  margin-bottom: 4px; line-height: 1.2;
+}
+.menu-item-desc {
+  font-size: 11.5px; color: var(--text-dim); font-weight: 300;
+  line-height: 1.5; letter-spacing: 0.02em;
+}
+.menu-item-price {
+  font-family: 'Cormorant', serif;
+  font-size: 17px; font-weight: 300; color: var(--gold);
+  margin-left: 20px; flex-shrink: 0;
+}
+.menu-full-btn {
+  margin-top: 56px; text-align: center;
+}
+
+/* ── GALLERY ── */
+.gallery-section { padding: 0; }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 320px 320px;
+  gap: 3px;
+}
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item img {
+  width:100%; height:100%; object-fit:cover;
+  transition: transform 0.7s ease, filter 0.5s;
+  filter: brightness(0.75) saturate(0.9);
+}
+.gallery-item:hover img { transform: scale(1.08); filter: brightness(0.9) saturate(1.1); }
+.gallery-item:first-child { grid-row: 1 / 3; }
+.gallery-label {
+  position: absolute; bottom:0; left:0; right:0;
+  padding: 20px 22px;
+  background: linear-gradient(to top, rgba(8,8,8,0.85), transparent);
+  font-size: 9.5px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); font-weight: 500; opacity:0;
+  transition: opacity 0.3s;
+}
+.gallery-item:hover .gallery-label { opacity:1; }
+
+/* ── PRIVATE DINING ── */
+.private { padding: 130px 0; position: relative; overflow: hidden; }
+.private::before {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(200,96,42,0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+.private-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; margin-top:64px; }
+.private-img { position:relative; }
+.private-img img { width:100%; height:480px; object-fit:cover; object-position:center; }
+.private-img::after {
+  content: '"'; position:absolute; top:-20px; left:-20px;
+  font-family:'Cormorant', serif; font-size:180px; font-weight:300;
+  color: rgba(200,96,42,0.12); line-height:1; pointer-events:none;
+}
+.private-content { }
+.private-features { margin-top: 36px; display:flex; flex-direction:column; gap:0; }
+.pf {
+  display:flex; gap:18px; align-items:flex-start;
+  padding:20px 0; border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.pf:last-child { border-bottom:none; }
+.pf-num {
+  font-family:'Cormorant', serif; font-size:28px; font-weight:300;
+  color:var(--ember); line-height:1; min-width:36px; flex-shrink:0; margin-top:2px;
+}
+.pf-title { font-size:14px; font-weight:500; color:var(--white); margin-bottom:5px; }
+.pf-desc { font-size:13px; color:var(--text-dim); font-weight:300; line-height:1.7; }
+
+/* ── RESERVATIONS ── */
+.reserve { background: var(--dark); padding: 130px 0; }
+.reserve-inner { display:grid; grid-template-columns:1fr 1fr; gap:80px; }
+.reserve-content { }
+.reserve-content p {
+  font-size: 15px; line-height:1.9; color:var(--text-dim); font-weight:300; margin-bottom:16px;
+}
+.reserve-info { margin-top:40px; display:flex; flex-direction:column; gap:20px; }
+.ri { display:flex; gap:16px; align-items:flex-start; }
+.ri-icon { font-size:18px; margin-top:2px; flex-shrink:0; min-width:26px; }
+.ri-lbl { font-size:9px; letter-spacing:0.24em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:4px; }
+.ri-val { font-size:14px; color:var(--text); font-weight:300; line-height:1.65; }
+
+/* reservation form */
+.res-form { display:flex; flex-direction:column; gap:16px; }
+.rf { display:flex; flex-direction:column; gap:6px; }
+.rf label { font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); font-weight:500; }
+.rf input, .rf select, .rf textarea {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 13px 16px;
+  font-size: 13.5px; color: var(--white);
+  font-family: 'Jost', sans-serif; font-weight:300;
+  outline:none; transition:border-color 0.25s; width:100%;
+}
+.rf input:focus, .rf select:focus, .rf textarea:focus { border-color:var(--ember); }
+.rf input::placeholder, .rf textarea::placeholder { color:rgba(255,255,255,0.18); }
+.rf select option { background:var(--char); }
+.rf textarea { height:100px; resize:none; }
+.rf-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.res-submit {
+  background:var(--ember); color:var(--white); border:none;
+  padding:16px 40px; font-family:'Jost',sans-serif;
+  font-size:10.5px; font-weight:600; letter-spacing:0.22em;
+  text-transform:uppercase; cursor:pointer;
+  transition:background 0.25s, transform 0.2s;
+  align-self:flex-start;
+}
+.res-submit:hover { background:var(--ember-l); transform:translateY(-1px); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--black);
+  border-top: 1px solid var(--border);
+  padding: 60px 60px 30px;
+}
+.footer-top {
+  display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px; padding-bottom:48px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  margin-bottom:28px;
+}
+.footer-logo-wrap { }
+.footer-logo {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:36px; letter-spacing:0.1em; color:var(--white);
+  margin-bottom:6px; display:block;
+}
+.footer-logo-tag {
+  font-size:9px; letter-spacing:0.35em; text-transform:uppercase;
+  color:var(--gold); font-weight:300; margin-bottom:20px;
+}
+.footer-tagline {
+  font-family:'Cormorant', serif; font-style:italic;
+  font-size:17px; color:var(--text-dim); line-height:1.65;
+}
+.footer-col-title {
+  font-size:8.5px; letter-spacing:0.3em; text-transform:uppercase;
+  color:rgba(255,255,255,0.2); font-weight:500; margin-bottom:18px;
+}
+.footer-links { display:flex; flex-direction:column; gap:11px; }
+.footer-links a {
+  font-size:13px; color:rgba(255,255,255,0.35);
+  text-decoration:none; font-weight:300; transition:color 0.2s;
+  letter-spacing:0.02em;
+}
+.footer-links a:hover { color:var(--gold); }
+.footer-bottom {
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+}
+.footer-copy { font-size:11px; color:rgba(255,255,255,0.18); font-weight:300; }
+.footer-credit { font-size:11px; color:rgba(255,255,255,0.12); }
+.footer-social { display:flex; gap:20px; }
+.footer-social a {
+  font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+  color:rgba(255,255,255,0.25); text-decoration:none; transition:color 0.2s;
+}
+.footer-social a:hover { color:var(--gold); }
+
+/* ── REVEAL ── */
+.rv { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease; }
+.rv.on { opacity:1; transform:translateY(0); }
+.rv-d1 { transition-delay:0.12s; }
+.rv-d2 { transition-delay:0.22s; }
+.rv-d3 { transition-delay:0.32s; }
+
+/* ── MOBILE ── */
+@media (max-width:860px) {
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display:none; }
+  nav { padding:0 22px; }
+  .nav-links { display:none; }
+  .wrap { padding:0 24px; }
+  .hero-title { font-size: clamp(72px, 22vw, 140px); }
+  .exp-grid, .menu-grid, .private-grid, .reserve-inner, .footer-top { grid-template-columns:1fr; gap:36px; }
+  .gallery-grid { grid-template-columns:1fr 1fr; grid-template-rows:200px 200px 200px; }
+  .gallery-item:first-child { grid-row:auto; }
+  .experience, .menu-section, .private, .reserve { padding:80px 0; }
+  footer { padding:44px 24px 24px; }
+  .rf-row { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    PORTER
+    <span class="nav-logo-sub">New York City</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#experience">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#private">Private Dining</a></li>
+    <li><a href="#reserve">Contact</a></li>
+    <li><a href="#reserve" class="nav-reserve">Reserve a Table</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Established 1997 · Midtown Manhattan</div>
+    <div class="hero-title">PORTER</div>
+    <div class="hero-title-sub">New York's Premier Steakhouse</div>
+    <div class="hero-btns">
+      <a href="#reserve" class="btn btn-ember">Reserve a Table</a>
+      <a href="#menu" class="btn btn-outline">View the Menu</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="hero-scroll-text">Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">USDA Prime Beef <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Dry-Aged In-House <span class="marquee-dot"></span></span>
+    <span class="marquee-item">James Beard Nominated <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Private Dining Available <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Award-Winning Wine List <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Midtown Manhattan <span class="marquee-dot"></span></span>
+    <span class="marquee-item">USDA Prime Beef <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Dry-Aged In-House <span class="marquee-dot"></span></span>
+    <span class="marquee-item">James Beard Nominated <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Private Dining Available <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Award-Winning Wine List <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Midtown Manhattan <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="wrap">
+    <div class="exp-grid">
+      <div class="rv">
+        <div class="section-tag">The Porter Experience</div>
+        <h2 class="h2">Where Every Cut<br>Tells a <em>Story</em></h2>
+        <div style="width:40px;height:1px;background:var(--ember);margin:24px 0;"></div>
+        <div class="exp-text">
+          <p>For over two decades, <strong>Porter</strong> has stood as one of New York City's most celebrated steakhouses — a place where the craft of butchery meets the art of hospitality.</p>
+          <p>We source exclusively <strong>USDA Prime</strong> beef from small family ranches across the American Midwest, dry-aged in our dedicated aging room for a minimum of 45 days. The result is a depth of flavor that no shortcut can replicate.</p>
+          <p>From the mahogany booths to the open-fire broiler visible from the dining room — every detail at Porter is intentional. This is not just dinner. This is New York.</p>
+        </div>
+        <div class="exp-divider"></div>
+        <div class="exp-signature">— Chef James Callahan, Executive Chef</div>
+      </div>
+      <div class="exp-img-stack rv rv-d1">
+        <img class="exp-img-main" src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=900&q=85&fit=crop" alt="Porter steak" style="position:absolute;top:0;right:0;width:85%;height:90%;object-fit:cover;filter:brightness(0.85) contrast(1.1);"></div>
+        <img class="exp-img-accent" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=85&fit=crop" alt="Wine" style="position:absolute;bottom:0;left:0;width:55%;height:55%;object-fit:cover;border:4px solid #080808;filter:brightness(0.9);"></div>
+        <div class="exp-year-badge">Est. 1997</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="wrap">
+    <div class="section-tag rv">The Menu</div>
+    <h2 class="h2 rv">Prime Cuts & <em>Classic Sides</em></h2>
+    <div class="menu-grid">
+
+      <!-- STEAKS -->
+      <div class="menu-category rv">
+        <div class="menu-category-title">Prime Steaks</div>
+        <div class="menu-items">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">The Porter 45-Day Ribeye</div>
+              <div class="menu-item-desc">22oz dry-aged USDA Prime · bone-in · roasted garlic & rosemary butter</div>
+            </div>
+            <div class="menu-item-price">$98</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">New York Strip</div>
+              <div class="menu-item-desc">16oz USDA Prime · wet-aged 28 days · fleur de sel finish</div>
+            </div>
+            <div class="menu-item-price">$74</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Filet Mignon</div>
+              <div class="menu-item-desc">8oz center-cut tenderloin · Béarnaise or au poivre · haricot vert</div>
+            </div>
+            <div class="menu-item-price">$68</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Tomahawk for Two</div>
+              <div class="menu-item-desc">38oz bone-in ribeye · carved tableside · compound butter trio</div>
+            </div>
+            <div class="menu-item-price">$165</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Wagyu A5 Striploin</div>
+              <div class="menu-item-desc">Japanese A5 · 6oz · ponzu, wasabi, pickled daikon</div>
+            </div>
+            <div class="menu-item-price">$145</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STARTERS -->
+      <div class="menu-category rv rv-d1">
+        <div class="menu-category-title">To Start</div>
+        <div class="menu-items">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Oysters Rockefeller</div>
+              <div class="menu-item-desc">Half dozen · spinach, Pernod, breadcrumb gratin</div>
+            </div>
+            <div class="menu-item-price">$28</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Steak Tartare</div>
+              <div class="menu-item-desc">Hand-cut prime tenderloin · capers, cornichon, quail egg</div>
+            </div>
+            <div class="menu-item-price">$26</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Bone Marrow</div>
+              <div class="menu-item-desc">Roasted veal marrow · parsley salad · sourdough toast points</div>
+            </div>
+            <div class="menu-item-price">$22</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Wedge Salad</div>
+              <div class="menu-item-desc">Iceberg · house-made blue cheese · lardons · tomato · chive</div>
+            </div>
+            <div class="menu-item-price">$18</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Lobster Bisque</div>
+              <div class="menu-item-desc">Maine lobster · cognac cream · chervil · claw garnish</div>
+            </div>
+            <div class="menu-item-price">$24</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDES -->
+      <div class="menu-category rv rv-d2">
+        <div class="menu-category-title">Classic Sides</div>
+        <div class="menu-items">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Truffle Mac & Cheese</div>
+              <div class="menu-item-desc">Black truffle, aged gruyère, panko crust</div>
+            </div>
+            <div class="menu-item-price">$22</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Creamed Spinach</div>
+              <div class="menu-item-desc">The classic · garlic, nutmeg, heavy cream</div>
+            </div>
+            <div class="menu-item-price">$14</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Porter Hash Browns</div>
+              <div class="menu-item-desc">Crispy double-fried · sour cream & chive</div>
+            </div>
+            <div class="menu-item-price">$14</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Roasted Asparagus</div>
+              <div class="menu-item-desc">Brown butter, lemon zest, Parmesan</div>
+            </div>
+            <div class="menu-item-price">$16</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COCKTAILS -->
+      <div class="menu-category rv rv-d3">
+        <div class="menu-category-title">Signature Cocktails</div>
+        <div class="menu-items">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">The Porter Old Fashioned</div>
+              <div class="menu-item-desc">Smoke-washed Bourbon · demerara · smoked orange peel</div>
+            </div>
+            <div class="menu-item-price">$22</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Manhattan No. 5</div>
+              <div class="menu-item-desc">Rye whiskey · sweet vermouth · Angostura · Luxardo cherry</div>
+            </div>
+            <div class="menu-item-price">$20</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Dry-Aged Martini</div>
+              <div class="menu-item-desc">Grey Goose · bone marrow washed · dry vermouth · olive brine</div>
+            </div>
+            <div class="menu-item-price">$24</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name">Blood & Sand</div>
+              <div class="menu-item-desc">Scotch · Cherry Heering · sweet vermouth · blood orange</div>
+            </div>
+            <div class="menu-item-price">$20</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="menu-full-btn rv">
+      <a href="#" class="btn btn-outline" style="border-color:var(--gold);color:var(--gold);">View Full Menu & Wine List</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section">
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85&fit=crop" alt="Porter dining room" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.75);"></div>
+      <div class="gallery-label">The Dining Room</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=85&fit=crop" alt="Prime Ribeye" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.75);"></div>
+      <div class="gallery-label">Prime Ribeye</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=85&fit=crop" alt="Wine Cellar" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.75);"></div>
+      <div class="gallery-label">The Wine Cellar</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=85&fit=crop" alt="Porter dishes" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.75);"></div>
+      <div class="gallery-label">Seasonal Selections</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=600&q=85&fit=crop" alt="Private dining" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.75);"></div>
+      <div class="gallery-label">Private Dining</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVATE DINING -->
+<section class="private" id="private">
+  <div class="wrap">
+    <div class="private-grid">
+      <div class="rv">
+        <div class="private-img">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85&fit=crop" alt="Private Dining" style="width:100%;height:480px;object-fit:cover;object-position:center;"></div>
+        </div>
+      </div>
+      <div class="rv rv-d1">
+        <div class="section-tag">Private Dining</div>
+        <h2 class="h2">Your Event,<br><em>Elevated</em></h2>
+        <p style="font-size:15px;line-height:1.9;color:var(--text-dim);font-weight:300;margin-bottom:8px;margin-top:20px;">Porter's private dining rooms are among the most sought-after in Manhattan — perfect for corporate dinners, milestone celebrations, and everything in between.</p>
+        <div class="private-features">
+          <div class="pf">
+            <div class="pf-num">01</div>
+            <div>
+              <div class="pf-title">The Vault Room</div>
+              <div class="pf-desc">Seats up to 18 guests. Exposed brick, custom wine display, complete audio-visual system. Exclusive use of adjacent sommelier service.</div>
+            </div>
+          </div>
+          <div class="pf">
+            <div class="pf-num">02</div>
+            <div>
+              <div class="pf-title">The Callahan Room</div>
+              <div class="pf-desc">Seats up to 32 guests. Named for our founding chef. Floor-to-ceiling windows overlooking 47th Street. Full buyout available.</div>
+            </div>
+          </div>
+          <div class="pf">
+            <div class="pf-num">03</div>
+            <div>
+              <div class="pf-title">Bespoke Menus</div>
+              <div class="pf-desc">Work directly with Chef Callahan to create a custom tasting menu tailored to your guests and occasion. Dietary accommodations always honored.</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:36px;">
+          <a href="#reserve" class="btn btn-ember">Inquire About Private Dining</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATIONS -->
+<section class="reserve" id="reserve">
+  <div class="wrap">
+    <div class="reserve-inner">
+      <div class="rv">
+        <div class="section-tag">Reservations</div>
+        <h2 class="h2">Join Us for<br><em>an Evening</em></h2>
+        <p style="font-size:15px;line-height:1.9;color:var(--text-dim);font-weight:300;margin-top:18px;">Reservations are strongly recommended. Walk-ins are welcomed based on availability at the bar and lounge.</p>
+        <div class="reserve-info">
+          <div class="ri">
+            <div class="ri-icon">📍</div>
+            <div>
+              <div class="ri-lbl">Address</div>
+              <div class="ri-val">142 West 47th Street<br>New York, New York 10036</div>
+            </div>
+          </div>
+          <div class="ri">
+            <div class="ri-icon">🕐</div>
+            <div>
+              <div class="ri-lbl">Hours</div>
+              <div class="ri-val">
+                Mon – Thu: 5:30 pm – 10:30 pm<br>
+                Fri – Sat: 5:00 pm – 11:30 pm<br>
+                Sunday: 5:00 pm – 10:00 pm
+              </div>
+            </div>
+          </div>
+          <div class="ri">
+            <div class="ri-icon">📞</div>
+            <div>
+              <div class="ri-lbl">Phone</div>
+              <div class="ri-val">(212) 555-0197</div>
+            </div>
+          </div>
+          <div class="ri">
+            <div class="ri-icon">✉️</div>
+            <div>
+              <div class="ri-lbl">Email</div>
+              <div class="ri-val">reservations@porternyc.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rv rv-d1">
+        <div class="res-form">
+          <div class="rf-row">
+            <div class="rf">
+              <label>First Name</label>
+              <input type="text" placeholder="James">
+            </div>
+            <div class="rf">
+              <label>Last Name</label>
+              <input type="text" placeholder="Callahan">
+            </div>
+          </div>
+          <div class="rf">
+            <label>Email Address</label>
+            <input type="email" placeholder="james@email.com">
+          </div>
+          <div class="rf">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="(212) 000-0000">
+          </div>
+          <div class="rf-row">
+            <div class="rf">
+              <label>Date</label>
+              <input type="date">
+            </div>
+            <div class="rf">
+              <label>Time</label>
+              <select>
+                <option>5:30 PM</option>
+                <option>6:00 PM</option>
+                <option>6:30 PM</option>
+                <option>7:00 PM</option>
+                <option>7:30 PM</option>
+                <option>8:00 PM</option>
+                <option>8:30 PM</option>
+                <option>9:00 PM</option>
+                <option>9:30 PM</option>
+              </select>
+            </div>
+          </div>
+          <div class="rf">
+            <label>Party Size</label>
+            <select>
+              <option>1 Guest</option>
+              <option>2 Guests</option>
+              <option>3 Guests</option>
+              <option>4 Guests</option>
+              <option>5 Guests</option>
+              <option>6 Guests</option>
+              <option>7+ Guests (Private Dining)</option>
+            </select>
+          </div>
+          <div class="rf">
+            <label>Special Requests</label>
+            <textarea placeholder="Allergies, special occasions, seating preferences…"></textarea>
+          </div>
+          <button class="res-submit">Request Reservation →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo-wrap">
+      <span class="footer-logo">PORTER</span>
+      <div class="footer-logo-tag">New York City · Est. 1997</div>
+      <div class="footer-tagline">"The finest steak in Manhattan,<br>without question."<br><span style="font-size:12px;opacity:0.5;font-style:normal;">— The New York Times</span></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <div class="footer-links">
+        <a href="#experience">About Porter</a>
+        <a href="#menu">Our Menu</a>
+        <a href="#private">Private Dining</a>
+        <a href="#reserve">Reservations</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Hours</div>
+      <div class="footer-links">
+        <a href="#">Mon – Thu: 5:30 – 10:30pm</a>
+        <a href="#">Fri – Sat: 5:00 – 11:30pm</a>
+        <a href="#">Sunday: 5:00 – 10:00pm</a>
+        <a href="#">Bar opens at 4:30pm daily</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Find Us</div>
+      <div class="footer-links">
+        <a href="#">142 W 47th Street</a>
+        <a href="#">New York, NY 10036</a>
+        <a href="#">(212) 555-0197</a>
+        <a href="#">reservations@porternyc.com</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Porter Restaurant Group LLC · All Rights Reserved</span>
+    <div class="footer-social">
+      <a href="#">Instagram</a>
+      <a href="#">OpenTable</a>
+      <a href="#">Resy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+(function loop(){
+  rx += (mx-rx)*0.18; ry += (my-ry)*0.18;
+  cursor.style.left = mx+'px'; cursor.style.top = my+'px';
+  ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  requestAnimationFrame(loop);
+})();
+
+// Nav solid on scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('solid', window.scrollY > 60);
+}, {passive:true});
+
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); });
+}, {threshold:0.08});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

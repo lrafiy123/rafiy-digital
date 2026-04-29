@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabay & Bowler LLP | Premier Women-Owned Law Firm | New York City</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{
+  --black:#0a0a0a;--off-black:#111;--dark:#161616;
+  --gold:#b8963e;--gold-light:#d4af6a;--gold-pale:#f5ecd4;
+  --white:#fff;--off-white:#faf8f5;--cream:#f2ede3;
+  --text:#1e1e1e;--text-mid:#555;--text-light:#888;
+  --border:rgba(184,150,62,.18);--border-dark:rgba(184,150,62,.10);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--off-white);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--black)}::-webkit-scrollbar-thumb{background:var(--gold)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 60px;background:rgba(10,10,10,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border-dark)}
+.logo{text-decoration:none;display:flex;flex-direction:column;gap:1px}
+.logo-main{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;letter-spacing:.05em;color:var(--white);line-height:1}
+.logo-sub{font-size:8.5px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);line-height:1}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{font-size:11.5px;font-weight:400;letter-spacing:.06em;color:rgba(255,255,255,.55);text-decoration:none;transition:color .25s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold)!important;color:var(--black)!important;padding:9px 20px;font-size:10.5px!important;font-weight:600!important;letter-spacing:.14em!important;transition:background .25s!important}
+.nav-cta:hover{background:var(--gold-light)!important}
+
+/* HERO */
+.hero{height:100vh;min-height:680px;background:var(--black);display:grid;grid-template-columns:55% 45%;position:relative;overflow:hidden}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:110px 64px 60px;position:relative;z-index:2}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;margin-bottom:36px;width:fit-content;border:1px solid var(--border);background:rgba(184,150,62,.07);padding:7px 14px}
+.hero-tag-pulse{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;animation:blink 2.2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-tag-text{font-size:9.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(42px,4.2vw,66px);font-weight:400;line-height:1.13;color:var(--white);margin-bottom:26px;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:15px;line-height:1.88;color:rgba(255,255,255,.45);font-weight:300;max-width:430px;margin-bottom:44px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:15px 30px;transition:all .25s}
+.btn-primary{background:var(--gold);color:var(--black)}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.14)}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
+
+/* Hero right — CSS image replacement */
+.hero-right{position:relative;overflow:hidden}
+.hero-right-visual{
+  width:100%;height:100%;
+  background:
+    linear-gradient(135deg, rgba(184,150,62,.15) 0%, transparent 50%),
+    linear-gradient(to bottom, #0d0d0d 0%, #1a1510 40%, #0a0a0a 100%);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+/* NYC skyline silhouette via CSS */
+.hero-right-visual::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:60%;
+  background:
+    linear-gradient(to top, #0a0a0a 0%, transparent 100%);
+  z-index:2;
+}
+.skyline{
+  position:absolute;bottom:60px;left:0;right:0;
+  display:flex;align-items:flex-end;justify-content:center;
+  gap:3px;padding:0 20px;z-index:1;
+}
+.bldg{background:rgba(184,150,62,.12);border-top:1px solid rgba(184,150,62,.2)}
+.hero-watermark{position:absolute;bottom:36px;right:36px;z-index:3;font-family:'Playfair Display',serif;font-size:110px;font-weight:700;line-height:1;color:rgba(184,150,62,.06);letter-spacing:-.04em;user-select:none;pointer-events:none}
+
+/* Gold orb */
+.hero-orb{position:absolute;top:20%;left:20%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle, rgba(184,150,62,.08) 0%, transparent 70%);pointer-events:none}
+
+.hero-bar{position:absolute;bottom:0;left:0;right:0;z-index:3;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border-dark)}
+.hero-stat{padding:24px 28px;border-right:1px solid var(--border-dark)}
+.hero-stat:last-child{border-right:none}
+.hero-stat-n{font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:var(--gold);line-height:1;margin-bottom:5px}
+.hero-stat-l{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:400}
+
+/* PRESS */
+.press{background:var(--off-black);border-bottom:1px solid var(--border-dark);padding:18px 60px;display:flex;align-items:center;gap:36px}
+.press-lbl{font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.22);white-space:nowrap;flex-shrink:0}
+.press-sep{width:1px;height:18px;background:rgba(255,255,255,.08);flex-shrink:0}
+.press-items{display:flex;gap:36px;align-items:center;flex-wrap:wrap}
+.press-item{font-family:'Playfair Display',serif;font-size:15.5px;font-style:italic;color:rgba(255,255,255,.22);white-space:nowrap;cursor:default;transition:color .25s}
+.press-item:hover{color:var(--gold-light)}
+
+/* SHARED */
+.wrap{max-width:1140px;margin:0 auto;padding:0 60px}
+.tag{display:flex;align-items:center;gap:12px;font-size:9.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.tag::before{content:'';width:26px;height:1px;background:var(--gold);flex-shrink:0}
+.h2{font-family:'Playfair Display',serif;font-size:clamp(34px,3.2vw,50px);font-weight:400;line-height:1.14;color:var(--text);margin-bottom:16px}
+.h2 em{font-style:italic;color:var(--gold)}
+.h2-white{color:var(--white)}
+.lead{font-size:15.5px;line-height:1.82;color:var(--text-mid);font-weight:300;max-width:540px}
+.lead-white{color:rgba(255,255,255,.42)}
+
+/* ABOUT */
+.about{padding:116px 0}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;margin-top:60px}
+.about-text p{font-size:15px;line-height:1.9;color:var(--text-mid);font-weight:300;margin-bottom:16px}
+.about-text p strong{font-weight:600;color:var(--text)}
+.about-pullquote{margin-top:28px;padding:22px 26px;border-left:3px solid var(--gold);background:var(--cream)}
+.about-pullquote-text{font-family:'Playfair Display',serif;font-size:17.5px;font-style:italic;line-height:1.65;color:var(--text);margin-bottom:10px}
+.about-pullquote-src{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.about-cards{display:flex;flex-direction:column;gap:2px}
+.about-card{background:var(--white);border:1px solid rgba(0,0,0,.06);padding:26px 30px;display:flex;gap:18px;align-items:flex-start;transition:transform .3s,box-shadow .3s,border-color .3s;cursor:default}
+.about-card:hover{transform:translateX(5px);box-shadow:-4px 0 0 var(--gold);border-color:transparent}
+.about-card-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.about-card-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
+.about-card-text{font-size:13px;line-height:1.75;color:var(--text-mid);font-weight:300}
+
+/* SERVICES */
+.services{background:var(--black);padding:116px 0}
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:60px;background:rgba(184,150,62,.08);outline:1px solid rgba(184,150,62,.08)}
+.svc{background:var(--off-black);padding:50px 44px;position:relative;overflow:hidden;transition:background .35s}
+.svc:hover{background:#191508}
+.svc-n{font-family:'Playfair Display',serif;font-size:80px;font-weight:700;color:rgba(184,150,62,.05);line-height:1;position:absolute;top:16px;right:28px;pointer-events:none;user-select:none}
+.svc-icon{font-size:26px;margin-bottom:22px}
+.svc-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:500;color:var(--white);margin-bottom:14px;line-height:1.3}
+.svc-desc{font-size:13.5px;line-height:1.85;color:rgba(255,255,255,.38);font-weight:300;margin-bottom:22px}
+.svc-pills{display:flex;flex-wrap:wrap;gap:7px}
+.svc-pill{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(184,150,62,.22);padding:4px 10px;font-weight:500}
+
+/* TEAM */
+.team{padding:116px 0;background:var(--cream)}
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:60px}
+.tcard{background:var(--white);overflow:hidden;box-shadow:0 2px 24px rgba(0,0,0,.07);transition:transform .4s,box-shadow .4s}
+.tcard:hover{transform:translateY(-7px);box-shadow:0 24px 64px rgba(0,0,0,.13)}
+
+/* Photo replaced with CSS portrait */
+.tcard-photo{position:relative;height:380px;overflow:hidden}
+.tcard-photo-visual{
+  width:100%;height:100%;
+  position:relative;
+  background:linear-gradient(160deg,#0d1428 0%,#162040 60%,#0d1428 100%);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-start;
+  padding-top:40px;
+}
+.tcard-photo-visual::before{ content:none; }
+.tcard-photo-visual::after{ content:none; }
+.tcard-photo-visual img{
+  width:160px; height:160px;
+  object-fit:cover;
+  object-position:center top;
+  border-radius:50%;
+  border:3px solid rgba(184,150,62,0.5);
+  display:block;
+  flex-shrink:0;
+  transition:transform 0.4s ease;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+}
+.tcard:hover .tcard-photo-visual img{ transform:scale(1.05); }
+.tcard-photo-gradient{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(13,20,40,0.3) 50%, transparent 100%);
+  pointer-events:none;
+}
+.tcard-photo-name{ z-index:2; }
+.tcard-photo-name{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:26px 30px}
+.tcard-photo-name h3{font-family:'Playfair Display',serif;font-size:25px;font-weight:400;color:var(--white);margin-bottom:4px;line-height:1.2}
+.tcard-photo-role{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.tcard-body{padding:30px}
+.tcard-bio{font-size:13.5px;line-height:1.88;color:var(--text-mid);font-weight:300;margin-bottom:24px}
+.tcard-creds{display:flex;flex-direction:column;gap:9px;margin-bottom:22px}
+.tcard-cred{display:flex;align-items:flex-start;gap:11px;font-size:12.5px;color:var(--text);line-height:1.55}
+.tcard-cred-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;margin-top:7px;flex-shrink:0}
+.tcard-contact{padding-top:20px;border-top:1px solid rgba(0,0,0,.07);display:flex;flex-direction:column;gap:5px}
+.tcard-contact a{font-size:12.5px;color:var(--gold);text-decoration:none;font-weight:500;letter-spacing:.03em;transition:opacity .2s}
+.tcard-contact a:hover{opacity:.65}
+
+/* STORY */
+.story{background:var(--black);padding:116px 0}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:60px}
+.story-img-wrap{position:relative}
+/* NYC courthouse/office visual */
+.story-visual{
+  width:100%;height:460px;
+  background:linear-gradient(160deg, #0f0f0f 0%, #1c1510 50%, #0d0d0d 100%);
+  position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;
+}
+.story-visual::before{
+  content:'JUSTICE';
+  font-family:'Playfair Display',serif;
+  font-size:120px;font-weight:700;
+  color:rgba(184,150,62,.04);
+  letter-spacing:.1em;
+  pointer-events:none;
+}
+.story-visual-lines{position:absolute;inset:0}
+.story-visual-lines::before{
+  content:'';position:absolute;top:20%;left:10%;right:10%;height:1px;background:rgba(184,150,62,.08);
+}
+.story-visual-lines::after{
+  content:'';position:absolute;top:80%;left:10%;right:10%;height:1px;background:rgba(184,150,62,.05);
+}
+.story-badge{position:absolute;bottom:-18px;right:-18px;background:var(--gold);padding:22px 26px}
+.story-badge-year{font-family:'Playfair Display',serif;font-size:38px;font-weight:700;color:var(--black);line-height:1}
+.story-badge-text{font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(0,0,0,.55);font-weight:700}
+.story-content p{font-size:14.5px;line-height:1.92;color:rgba(255,255,255,.4);font-weight:300;margin-bottom:16px}
+.story-content p strong{color:rgba(255,255,255,.82);font-weight:500}
+.timeline{display:flex;flex-direction:column;margin-top:36px}
+.tl-item{display:flex;gap:22px;align-items:flex-start;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.tl-item:last-child{border-bottom:none}
+.tl-year{font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--gold);min-width:48px;line-height:1.3;flex-shrink:0}
+.tl-text{font-size:13px;line-height:1.75;color:rgba(255,255,255,.38);font-weight:300}
+
+/* CONTACT */
+.contact{padding:116px 0;background:var(--off-white)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:80px;margin-top:60px;align-items:start}
+.contact-items{display:flex;flex-direction:column;gap:28px}
+.ci{display:flex;gap:16px;align-items:flex-start}
+.ci-icon{width:44px;height:44px;flex-shrink:0;background:var(--cream);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:17px}
+.ci-lbl{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:5px}
+.ci-val{font-size:14px;color:var(--text);line-height:1.7;font-weight:300}
+.ci-val a{color:inherit;text-decoration:none;transition:color .2s}
+.ci-val a:hover{color:var(--gold)}
+.form{display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld label{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--text-light);font-weight:700}
+.fld input,.fld select,.fld textarea{background:var(--white);border:1px solid rgba(0,0,0,.1);padding:13px 15px;font-size:13.5px;color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;outline:none;transition:border-color .25s;width:100%}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--gold)}
+.fld input::placeholder,.fld textarea::placeholder{color:rgba(0,0,0,.18)}
+.fld textarea{height:115px;resize:none}
+.form-submit{display:flex;align-items:center;gap:10px;background:var(--black);color:var(--white);border:none;padding:15px 36px;font-family:'DM Sans',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .2s;align-self:flex-start}
+.form-submit:hover{background:var(--gold);color:var(--black);transform:translateY(-1px)}
+.form-note{font-size:11.5px;color:var(--text-light);font-style:italic;line-height:1.6}
+
+/* FOOTER */
+footer{background:var(--black);border-top:1px solid var(--border-dark);padding:52px 60px 30px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.05);margin-bottom:24px}
+.footer-brand-name{font-family:'Playfair Display',serif;font-size:21px;font-weight:400;color:var(--white);letter-spacing:.03em;margin-bottom:10px}
+.footer-brand-desc{font-size:12.5px;color:rgba(255,255,255,.28);font-weight:300;line-height:1.75;margin-bottom:20px}
+.footer-badge{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);padding:7px 13px;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.footer-col-title{font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.2);font-weight:700;margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:11px}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.36);text-decoration:none;font-weight:300;transition:color .2s}
+.footer-links a:hover{color:var(--gold-light)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.footer-copy{font-size:11px;color:rgba(255,255,255,.18);font-weight:300}
+.footer-adv{font-size:10px;color:rgba(255,255,255,.12);letter-spacing:.08em}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
+.rv.on{opacity:1;transform:translateY(0)}
+.rv-d1{transition-delay:.12s}.rv-d2{transition-delay:.22s}
+
+/* MOBILE */
+@media(max-width:860px){
+  nav{padding:0 22px}.nav-links{display:none}
+  .hero{grid-template-columns:1fr;height:auto;min-height:100vh}
+  .hero-left{padding:100px 24px 40px}.hero-right{display:none}
+  .hero-bar{position:static;grid-template-columns:1fr 1fr}
+  .press{padding:16px 24px;flex-wrap:wrap;gap:16px}
+  .wrap{padding:0 24px}
+  .about{padding:80px 0}
+  .about-grid,.team-grid,.contact-grid,.story-grid,.footer-top{grid-template-columns:1fr;gap:36px}
+  .services,.team,.story,.contact{padding:80px 0}
+  .services-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .story-badge{right:0;bottom:0}
+  footer{padding:40px 24px 24px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">
+    <span class="logo-main">Gabay & Bowler LLP</span>
+    <span class="logo-sub">Attorneys at Law · New York City</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Practice Areas</a></li>
+    <li><a href="#team">Our Team</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Consult Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">
+      <div class="hero-tag-pulse"></div>
+      <span class="hero-tag-text">Women-Owned · NYC · Est. 2006</span>
+    </div>
+    <h1>Big-Firm Skill.<br><em>Boutique</em> Focus.<br>Sensible Rates.</h1>
+    <p class="hero-desc">Founded by two former Proskauer senior litigators, Gabay & Bowler delivers sophisticated legal counsel — with the direct partner access and practical creativity that only a boutique firm can offer.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-primary">Schedule a Consultation</a>
+      <a href="#services" class="btn btn-secondary">Our Practice Areas</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-visual" style="padding:0;overflow:hidden;">
+    <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1400&q=85&fit=crop" 
+         alt="New York City" 
+         style="width:100%;height:100%;object-fit:cover;opacity:0.55;position:absolute;inset:0;"
+         onerror="this.style.display='none'">
+      <div class="hero-watermark">NYC</div>
+    </div>
+  </div>
+  <div class="hero-bar">
+    <div class="hero-stat"><div class="hero-stat-n">18+</div><div class="hero-stat-l">Years in Practice</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">M/WBE</div><div class="hero-stat-l">NYC Certified</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">5+</div><div class="hero-stat-l">Major Press Features</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">2006</div><div class="hero-stat-l">Founded in New York</div></div>
+  </div>
+</section>
+
+<!-- PRESS -->
+<div class="press">
+  <span class="press-lbl">As Featured In</span>
+  <div class="press-sep"></div>
+  <div class="press-items">
+    <span class="press-item">The New York Times</span>
+    <span class="press-item">The Wall Street Journal</span>
+    <span class="press-item">Women's Wear Daily</span>
+    <span class="press-item">NY1 News</span>
+    <span class="press-item">The New York Law Journal</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="tag">About the Firm</div>
+    <h2 class="h2">A Law Firm Built on <em>Principle</em></h2>
+    <div class="about-grid">
+      <div class="about-text rv">
+        <p>Gabay & Bowler was built on a bold premise: clients deserve sophisticated, experienced legal counsel — without the overhead, bureaucracy, and inflated billing of a major firm.</p>
+        <p>Founded in 2006 by <strong>Sari Gabay</strong> and <strong>Anne Marie Bowler</strong> — both Senior Litigators from Proskauer Rose LLP — the firm has spent nearly two decades proving that lean, focused, and brilliant beats big every time.</p>
+        <p>Identified by <em>Women's Wear Daily</em> as the go-to firm for retail clients, and described by <em>The New York Times</em> as "thriving and lean," the firm brings entrepreneurial energy and institutional pedigree to every engagement.</p>
+        <p>Clients work directly with founding partners — no associates buffering access, no surprise billing. Just experienced counsel on every call.</p>
+        <div class="about-pullquote">
+          <div class="about-pullquote-text">"There has to be another way to practice law and appreciate life — we found it."</div>
+          <div class="about-pullquote-src">Sari Gabay & Anne Marie Bowler, Co-Founders</div>
+        </div>
+      </div>
+      <div class="about-cards rv rv-d1">
+        <div class="about-card"><div class="about-card-icon">⚖️</div><div><div class="about-card-title">Big-Firm Pedigree</div><div class="about-card-text">Both founding partners were Senior Litigators at Proskauer Rose — one of the nation's top international law firms.</div></div></div>
+        <div class="about-card"><div class="about-card-icon">💡</div><div><div class="about-card-title">Flexible Fee Structures</div><div class="about-card-text">Hourly, flat fee, and contingency arrangements — designed around your business, not billing targets.</div></div></div>
+        <div class="about-card"><div class="about-card-icon">🏙️</div><div><div class="about-card-title">Rooted in New York</div><div class="about-card-text">NYC-certified M/WBE firm with offices in Manhattan and Long Island, serving clients for nearly two decades.</div></div></div>
+        <div class="about-card"><div class="about-card-icon">🤝</div><div><div class="about-card-title">Direct Partner Access</div><div class="about-card-text">Every client works directly with the founding partners. Your call, your email — handled personally.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="tag">Practice Areas</div>
+    <h2 class="h2 h2-white">What We <em>Do Best</em></h2>
+    <p class="lead lead-white">A focused set of practice areas where our partners bring deep expertise and a record of results across New York's most competitive industries.</p>
+    <div class="services-grid">
+      <div class="svc rv"><div class="svc-n">01</div><div class="svc-icon">🏛️</div><div class="svc-title">Litigation & Investigations</div><div class="svc-desc">Skilled representation in New York state and federal courts across commercial disputes, regulatory investigations, and complex matters. Anne Marie's mediation training brings practical, solutions-first thinking.</div><div class="svc-pills"><span class="svc-pill">Commercial Disputes</span><span class="svc-pill">Federal Court</span><span class="svc-pill">Business Divorces</span></div></div>
+      <div class="svc rv rv-d1"><div class="svc-n">02</div><div class="svc-icon">📋</div><div class="svc-title">Business & Contract Law</div><div class="svc-desc">Drafting, reviewing, and negotiating contracts across employment, non-compete agreements, commercial leases, and business transactions of all sizes.</div><div class="svc-pills"><span class="svc-pill">Contract Drafting</span><span class="svc-pill">Employment Law</span><span class="svc-pill">Non-Competes</span></div></div>
+      <div class="svc rv rv-d2"><div class="svc-n">03</div><div class="svc-icon">🎨</div><div class="svc-title">Intellectual Property</div><div class="svc-desc">Protecting your brand's most valuable assets — trademarks, trade secrets, and licensing. Especially adept in fashion, retail, art, and entertainment sectors.</div><div class="svc-pills"><span class="svc-pill">Trademarks</span><span class="svc-pill">Fashion Law</span><span class="svc-pill">Licensing</span></div></div>
+      <div class="svc rv rv-d1"><div class="svc-n">04</div><div class="svc-icon">🛡️</div><div class="svc-title">Insurance & Administrative Law</div><div class="svc-desc">Sari is a recognized insurance regulatory attorney representing brokers, agents, and public adjusters in DFS investigations, licensing, and agency transactions.</div><div class="svc-pills"><span class="svc-pill">DFS Investigations</span><span class="svc-pill">Licensing</span><span class="svc-pill">Coverage Disputes</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="wrap">
+    <div class="tag">Our Team</div>
+    <h2 class="h2">Meet the <em>Partners</em></h2>
+    <p class="lead">Two founding partners. Combined 40+ years of legal experience. A shared commitment to doing things differently.</p>
+    <div class="team-grid">
+      <div class="tcard rv">
+        <div class="tcard-photo">
+          <div class="tcard-photo-visual">
+            <img src="data:image/jpeg;base64,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" alt="Sari Gabay">
+            <div class="tcard-photo-gradient"></div>
+            <div class="tcard-photo-name">
+              <h3>Sari Gabay</h3>
+              <div class="tcard-photo-role">Partner &amp; Co-Founder</div>
+            </div>
+          </div>
+        </div>
+        <div class="tcard-body">
+          <p class="tcard-bio">A native New Yorker raised in Greenwich Village, Sari is a recognized insurance regulatory attorney and entrepreneurial counselor. At Proskauer, she served on the legal team representing Silverstein Properties in the landmark 9/11 property insurance litigation. A frequent CLE faculty speaker, Insurance Advocate contributor, and published fiction writer.</p>
+          <div class="tcard-creds">
+            <div class="tcard-cred"><div class="tcard-cred-dot"></div>Senior Litigator, Proskauer Rose LLP — Silverstein / 9/11 litigation</div>
+            <div class="tcard-cred"><div class="tcard-cred-dot"></div>University of Michigan, Ann Arbor; Brooklyn Law School J.D.</div>
+            <div class="tcard-cred"><div class="tcard-cred-dot"></div>PIA Circle of Consultants · PLI Faculty · Insurance Advocate</div>
+            <div class="tcard-cred"><div class="tcard-cred-dot"></div>1st Place, National First Amendment Moot Court Competition</div>
+          </div>
+          <div class="tcard-contact">
+            <a href="mailto:gabay@gabaybowler.com">gabay@gabaybowler.com</a>
+            <a href="tel:2129415025">212.941.5025</a>
+          </div>
+        </div>
+      </div>
+      <div class="tcard rv rv-d1">
+        <div class="tcard-photo">
+          <div class="tcard-photo-visual">
+            <img src="data:image/jpeg;base64,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" alt="Anne Marie Bowler">
+            <div class="tcard-photo-gradient"></div>
+            <div class="tcard-photo-name">
+              <h3>Anne Marie Bowler</h3>
+              <div class="tcard-photo-role">Partner &amp; Co-Founder</div>
+            </div>
+          </div>
+        </div>
+        <div class="tcard-body">
+          <p class="tcard-bio">A litigator and transactional attorney in equal measure, Anne Marie counsels clients across fashion, entertainment, real estate, tech, and nonprofits. She clerked for Chief Judge Judith Kaye at New York's highest court, taught at New York Law School, and served on the WSJ's Executive Task Force on Women in the Economy. A certified mediator.</p>
+          <div class="tcard-creds">
+            <div class="tcard-cred"><div class="tcard-cred-dot"></div>Senior Law Clerk to Chief Judge Judith S. Kaye — NY Court of Appeals</div>
+            <div class="tcard-cred"><div class="tcard-cred-dot"></div>Senior Litigator, Proskauer Rose; Adjunct Professor, NYLS</div>
+            <div class="tcard-cred"><div class="tcard-cred-dot"></div>Siena College; Brooklyn Law School J.D.</div>
+            <div class="tcard-cred"><div class="tcard-cred-dot"></div>Certified Mediator · Fordham Fashion Law Institute</div>
+          </div>
+          <div class="tcard-contact">
+            <a href="mailto:bowler@gabaybowler.com">bowler@gabaybowler.com</a>
+            <a href="tel:2129415025">212.941.5025</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="tag">Our Story</div>
+    <h2 class="h2 h2-white">Why We Built <em>Something Different</em></h2>
+    <div class="story-grid">
+      <div class="story-img-wrap rv">
+        <div class="story-visual">
+          <div class="story-visual-lines"></div>
+        </div>
+        <div class="story-badge"><div class="story-badge-year">2006</div><div class="story-badge-text">Founded in NYC</div></div>
+      </div>
+      <div class="story-content rv rv-d1">
+        <p>After six years as litigators at <strong>Proskauer Rose</strong>, Sari and Anne Marie each stepped back — Sari to have her second child, Anne Marie to clerk for New York's Chief Judge. That distance gave them clarity: <strong>there had to be a better way.</strong></p>
+        <p>They were most energized working directly with clients and solving problems creatively. So in 2006, they left — and built Gabay & Bowler from the ground up.</p>
+        <p>By 2011, <strong>The New York Times</strong> featured them as a thriving success story. Today they mentor other lawyers looking to make the same leap.</p>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-year">2006</div><div class="tl-text">Left Proskauer and founded Gabay & Bowler, sending announcements to every lawyer they knew.</div></div>
+          <div class="tl-item"><div class="tl-year">2011</div><div class="tl-text">Featured in The New York Times as a "thriving and lean" boutique success story.</div></div>
+          <div class="tl-item"><div class="tl-year">2012</div><div class="tl-text">Anne Marie joined the WSJ's Women In The Economy Executive Task Force. Featured in WSJ and on NPR.</div></div>
+          <div class="tl-item"><div class="tl-year">2023</div><div class="tl-text">Donald Gabay joins as Of Counsel, adding decades of insurance law expertise to the practice.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="tag">Get In Touch</div>
+    <h2 class="h2">Let's Discuss <em>Your Matter</em></h2>
+    <p class="lead">Every client gets direct partner access from day one. No gatekeepers, no junior associates.</p>
+    <div class="contact-grid">
+      <div class="contact-items rv">
+        <div class="ci"><div class="ci-icon">📍</div><div><div class="ci-lbl">Manhattan Office</div><div class="ci-val">48 West 21st Street, Suite 1000<br>New York, New York 10010</div></div></div>
+        <div class="ci"><div class="ci-icon">📞</div><div><div class="ci-lbl">Phone & Fax</div><div class="ci-val"><a href="tel:2129415025">212.941.5025</a> · 212.202.3883 (Fax)</div></div></div>
+        <div class="ci"><div class="ci-icon">✉️</div><div><div class="ci-lbl">Email</div><div class="ci-val"><a href="mailto:gabay@gabaybowler.com">gabay@gabaybowler.com</a><br><a href="mailto:bowler@gabaybowler.com">bowler@gabaybowler.com</a></div></div></div>
+        <div class="ci"><div class="ci-icon">🏢</div><div><div class="ci-lbl">Additional Office</div><div class="ci-val">Long Island, New York</div></div></div>
+      </div>
+      <div class="rv rv-d1">
+        <div class="form">
+          <div class="form-row"><div class="fld"><label>First Name</label><input type="text" placeholder="Jane"></div><div class="fld"><label>Last Name</label><input type="text" placeholder="Smith"></div></div>
+          <div class="fld"><label>Email Address</label><input type="email" placeholder="jane@yourcompany.com"></div>
+          <div class="fld"><label>Phone Number</label><input type="tel" placeholder="(212) 000-0000"></div>
+          <div class="fld"><label>Practice Area</label><select><option>Select a practice area…</option><option>Litigation & Investigations</option><option>Business & Contract Law</option><option>Intellectual Property</option><option>Insurance & Administrative Law</option><option>Other</option></select></div>
+          <div class="fld"><label>Tell Us About Your Matter</label><textarea placeholder="Please briefly describe your legal situation. All information is kept strictly confidential."></textarea></div>
+          <button class="form-submit">Send Message →</button>
+          <p class="form-note">All inquiries are confidential. A partner will respond within one business day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Gabay & Bowler LLP</div>
+      <p class="footer-brand-desc">The Premier Women-Owned Law Firm in New York City. Big-firm expertise. Boutique attention. Sensible rates.</p>
+      <div class="footer-badge">✦ &nbsp;NYC Certified M/WBE Enterprise</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <div class="footer-links"><a href="#about">About the Firm</a><a href="#services">Practice Areas</a><a href="#team">Our Team</a><a href="#story">Our Story</a><a href="#contact">Contact</a></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-links"><a href="tel:2129415025">212.941.5025</a><a href="mailto:gabay@gabaybowler.com">gabay@gabaybowler.com</a><a href="mailto:bowler@gabaybowler.com">bowler@gabaybowler.com</a><a href="#">48 W 21st St, Suite 1000 · NY</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Gabay & Bowler LLP · All Rights Reserved · New York, New York</span>
+    <span class="footer-adv">Attorney Advertisement</span>
+  </div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on')}),{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav')?.classList.toggle('scrolled',scrollY>40);
+},{passive:true});
+</script>
+</body>
+</html>

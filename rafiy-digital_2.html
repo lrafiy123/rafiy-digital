@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rafiy Digital — NYC Web & Brand Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{
+  --black:#050505;--dark:#0c0c0c;--card:#111;
+  --white:#fff;--teal:#00e5c8;--teal-d:#00b8a0;
+  --orange:#ff4d00;--lgray:#888;--border:rgba(255,255,255,0.06);
+}
+body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none}
+#cur{position:fixed;width:10px;height:10px;background:var(--teal);border-radius:50%;pointer-events:none;z-index:9999;left:0;top:0;will-change:transform;transition:width .2s,height .2s,background .2s}
+#cur-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(0,229,200,0.45);border-radius:50%;pointer-events:none;z-index:9998;left:0;top:0;will-change:transform}
+body:has(a:hover,button:hover) #cur{width:22px;height:22px;background:var(--orange)}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(5,5,5,0.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-mark{width:36px;height:36px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--black);flex-shrink:0}
+.logo-name{font-size:15px;font-weight:700;color:var(--white);letter-spacing:0.06em;text-transform:uppercase;line-height:1}
+.logo-sub{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--lgray);letter-spacing:0.18em;text-transform:uppercase;display:block;margin-top:2px}
+.nav-links{display:flex;gap:30px;list-style:none;align-items:center}
+.nav-links a{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--teal)}
+.nav-cta{background:var(--teal)!important;color:var(--black)!important;padding:9px 22px;font-weight:700!important}
+.nav-cta:hover{background:var(--teal-d)!important}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 56px 100px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(0,229,200,0.07) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%);pointer-events:none}
+.glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,200,0.07) 0%,transparent 65%);top:-100px;left:-150px;pointer-events:none}
+.glow2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(255,77,0,0.05) 0%,transparent 65%);bottom:-50px;right:10%;pointer-events:none}
+.hero-inner{position:relative;z-index:2;max-width:1060px}
+.avail{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(0,229,200,0.2);background:rgba(0,229,200,0.04);padding:6px 16px;margin-bottom:48px;width:fit-content}
+.avail-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.avail-text{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--teal)}
+.hero-h1{font-size:clamp(56px,9vw,128px);font-weight:900;line-height:0.92;letter-spacing:-0.03em;color:var(--white);margin-bottom:36px}
+.hero-h1 .outline{-webkit-text-stroke:1.5px rgba(255,255,255,0.2);color:transparent}
+.hero-h1 .hi{color:var(--teal)}
+.hero-sub{font-size:17px;line-height:1.82;color:rgba(255,255,255,0.38);font-weight:300;max-width:500px;margin-bottom:52px}
+.hero-sub b{color:rgba(255,255,255,0.78);font-weight:500}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:88px}
+.btn{display:inline-block;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;padding:14px 30px;transition:all .22s;border:1px solid transparent}
+.btn-teal{background:var(--teal);color:var(--black);border-color:var(--teal)}
+.btn-teal:hover{background:transparent;color:var(--teal)}
+.btn-outline{background:transparent;color:rgba(255,255,255,0.4);border-color:rgba(255,255,255,0.1)}
+.btn-outline:hover{border-color:var(--teal);color:var(--teal)}
+.hstats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);padding-top:40px}
+.hstat{padding-right:32px;border-right:1px solid var(--border);margin-right:32px}
+.hstat:last-child{border-right:none;padding-right:0;margin-right:0}
+.hstat-n{font-size:44px;font-weight:800;color:var(--teal);line-height:1;margin-bottom:6px;letter-spacing:-0.02em}
+.hstat-l{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--lgray)}
+.ticker{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:13px 0;overflow:hidden;background:var(--dark)}
+.ticker-track{display:flex;animation:ticker 22s linear infinite;width:max-content}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:18px;padding:0 18px;white-space:nowrap;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.22)}
+.ticker-hi{color:rgba(0,229,200,0.45)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 56px}
+.sec{padding:120px 0;border-bottom:1px solid var(--border)}
+.stag{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.stag::before{content:'—';opacity:.4}
+.h2{font-size:clamp(38px,4.2vw,58px);font-weight:800;line-height:0.97;letter-spacing:-0.025em;color:var(--white);margin-bottom:14px}
+.h2 em{font-style:normal;color:var(--teal)}
+.svc-intro{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:end;margin-bottom:64px}
+.svc-lead{font-size:15px;line-height:1.85;color:rgba(255,255,255,0.35);font-weight:300}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.scard{background:var(--card);padding:40px 32px;position:relative;overflow:hidden;transition:background .28s;cursor:default}
+.scard::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:2px;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.scard:hover{background:#161616}
+.scard:hover::after{transform:scaleX(1)}
+.scard-num{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;color:rgba(255,255,255,0.1);margin-bottom:22px}
+.scard-icon{font-size:26px;margin-bottom:18px;display:block}
+.scard-name{font-size:17px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.25}
+.scard-desc{font-size:12.5px;line-height:1.8;color:rgba(255,255,255,0.3);font-weight:300;margin-bottom:18px}
+.scard-price{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.08em;color:var(--teal)}
+.scard-star{background:rgba(0,229,200,0.04);border-left:2px solid var(--teal)}
+.work-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
+.work-note{font-size:13px;color:var(--lgray);font-weight:300;max-width:260px;line-height:1.7}
+.proj-list{display:flex;flex-direction:column}
+.proj{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:32px;padding:30px 0;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;transition:padding-left .25s;position:relative;cursor:pointer}
+.proj:first-child{border-top:1px solid var(--border)}
+.proj::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--teal);transition:width .25s;opacity:0.06}
+.proj:hover{padding-left:20px}
+.proj:hover::before{width:100%}
+.proj-n{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;color:rgba(255,255,255,0.15)}
+.proj-name{font-size:26px;font-weight:700;letter-spacing:-0.015em;color:var(--white);margin-bottom:4px;transition:color .2s}
+.proj:hover .proj-name{color:var(--teal)}
+.proj-cat{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--lgray)}
+.proj-chips{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.chip{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.08);padding:4px 9px;color:rgba(255,255,255,0.25);transition:all .2s}
+.proj:hover .chip{border-color:rgba(0,229,200,0.3);color:rgba(0,229,200,0.6)}
+.proj-arrow{font-size:20px;color:rgba(255,255,255,0.1);transition:color .2s,transform .2s;margin-left:8px}
+.proj:hover .proj-arrow{color:var(--teal);transform:translateX(5px)}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:60px}
+.step{background:var(--card);padding:36px 28px;position:relative}
+.step-bg{position:absolute;top:16px;right:16px;font-size:72px;font-weight:900;color:rgba(255,255,255,0.02);line-height:1;pointer-events:none;letter-spacing:-0.04em}
+.step-icon{font-size:26px;margin-bottom:18px;display:block}
+.step-title{font-size:15px;font-weight:700;color:var(--white);margin-bottom:9px}
+.step-desc{font-size:12.5px;line-height:1.78;color:rgba(255,255,255,0.28);font-weight:300}
+.step-time{margin-top:18px;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--teal)}
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:60px}
+.pkg{background:var(--card);padding:44px 34px;position:relative}
+.pkg-hot{background:#0f0f0f;outline:1px solid rgba(0,229,200,0.35)}
+.pkg-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--teal);color:var(--black);font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.22em;text-transform:uppercase;padding:5px 16px;white-space:nowrap}
+.pkg-tier{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.26em;text-transform:uppercase;color:var(--lgray);margin-bottom:14px}
+.pkg-price{font-size:60px;font-weight:800;line-height:1;letter-spacing:-0.03em;color:var(--white);margin-bottom:4px}
+.pkg-hot .pkg-price{color:var(--teal)}
+.pkg-note{font-size:12px;color:var(--lgray);font-weight:300;margin-bottom:32px}
+.pkg-features{display:flex;flex-direction:column;gap:11px;margin-bottom:32px}
+.pkf{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:rgba(255,255,255,0.48);font-weight:300;line-height:1.5}
+.pkf::before{content:'✓';color:var(--teal);font-size:11px;flex-shrink:0;margin-top:2px;font-weight:600}
+.pkg-btn{display:block;text-align:center;font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:13px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);transition:all .22s}
+.pkg-btn:hover{border-color:var(--teal);color:var(--teal)}
+.pkg-hot .pkg-btn{background:var(--teal);color:var(--black);border-color:var(--teal)}
+.pkg-hot .pkg-btn:hover{background:transparent;color:var(--teal)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;margin-top:60px}
+.about-card{background:var(--card);border:1px solid var(--border);padding:44px 36px;position:relative;overflow:hidden}
+.about-card-bg{position:absolute;bottom:-24px;right:-12px;font-size:130px;font-weight:900;color:rgba(0,229,200,0.03);letter-spacing:-0.04em;line-height:1;pointer-events:none}
+.about-initials{width:72px;height:72px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:var(--black);margin-bottom:24px}
+.about-name{font-size:26px;font-weight:800;letter-spacing:-0.015em;color:var(--white);margin-bottom:3px}
+.about-role{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:24px}
+.about-card-bio{font-size:13px;line-height:1.85;color:rgba(255,255,255,0.36);font-weight:300}
+.about-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px}
+.achip{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(0,229,200,0.18);padding:5px 11px;color:rgba(0,229,200,0.6)}
+.about-text p{font-size:14.5px;line-height:1.9;color:rgba(255,255,255,0.38);font-weight:300;margin-bottom:16px}
+.about-text p b{color:rgba(255,255,255,0.78);font-weight:500}
+.about-grid2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-top:32px}
+.agstat{background:var(--card);padding:18px 20px}
+.agstat-n{font-size:28px;font-weight:800;color:var(--teal);line-height:1;margin-bottom:4px}
+.agstat-l{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--lgray)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:72px;margin-top:60px;align-items:start}
+.cinfo{display:flex;flex-direction:column}
+.ci{display:flex;gap:14px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--border)}
+.ci:last-of-type{border-bottom:none}
+.ci-icon{width:38px;height:38px;flex-shrink:0;background:rgba(0,229,200,0.06);border:1px solid rgba(0,229,200,0.12);display:flex;align-items:center;justify-content:center;font-size:15px}
+.ci-lbl{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+.ci-val{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.65;font-weight:300}
+.ci-val a{color:inherit;text-decoration:none;transition:color .2s}
+.ci-val a:hover{color:var(--teal)}
+.cnotice{margin-top:28px;padding:18px 20px;border:1px solid rgba(0,229,200,0.08);background:rgba(0,229,200,0.02)}
+.cnotice p{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:rgba(255,255,255,0.2);line-height:1.8}
+.cnotice b{color:rgba(0,229,200,0.5)}
+.cform{display:flex;flex-direction:column;gap:13px}
+.cf{display:flex;flex-direction:column;gap:6px}
+.cf label{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--lgray)}
+.cf input,.cf select,.cf textarea{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:12px 14px;font-size:13px;color:var(--white);font-family:'Outfit',sans-serif;font-weight:300;outline:none;transition:border-color .22s;width:100%}
+.cf input:focus,.cf select:focus,.cf textarea:focus{border-color:var(--teal)}
+.cf input::placeholder,.cf textarea::placeholder{color:rgba(255,255,255,0.12)}
+.cf select option{background:var(--dark)}
+.cf textarea{height:105px;resize:none}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.csub{background:var(--teal);color:var(--black);border:none;padding:14px 36px;font-family:'Outfit',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:background .2s;align-self:flex-start}
+.csub:hover{background:var(--teal-d)}
+footer{background:var(--dark);border-top:1px solid var(--border);padding:52px 56px 28px}
+.footer-main{display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:48px;padding-bottom:40px;border-bottom:1px solid var(--border);margin-bottom:24px}
+.footer-mark{width:40px;height:40px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--black);margin-bottom:12px}
+.footer-brand{font-size:15px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--white);margin-bottom:4px}
+.footer-desc{font-size:12.5px;color:var(--lgray);font-weight:300;line-height:1.7}
+.fcol-title{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.26em;text-transform:uppercase;color:rgba(255,255,255,0.18);margin-bottom:16px}
+.fcol-links{display:flex;flex-direction:column;gap:10px}
+.fcol-links a{font-size:13px;color:rgba(255,255,255,0.3);text-decoration:none;font-weight:300;transition:color .2s}
+.fcol-links a:hover{color:var(--teal)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.footer-copy{font-size:10.5px;color:rgba(255,255,255,0.14)}
+.footer-right{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:rgba(255,255,255,0.1)}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .58s ease,transform .58s ease}
+.rv.on{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media(max-width:860px){
+  body{cursor:auto}#cur,#cur-ring{display:none}
+  nav{padding:0 20px}.nav-links{display:none}
+  .hero{padding:100px 20px 64px}.wrap{padding:0 20px}.sec{padding:80px 0}
+  .svc-intro,.about-grid,.contact-grid{grid-template-columns:1fr;gap:36px}
+  .svc-grid,.process-grid,.pkg-grid{grid-template-columns:1fr}
+  .hstats{grid-template-columns:1fr 1fr;gap:24px;padding-top:32px}
+  .hstat{border-right:none;padding-right:0;margin-right:0}
+  .proj{grid-template-columns:40px 1fr auto;gap:16px}.proj-chips{display:none}
+  .work-header{flex-direction:column;align-items:flex-start;gap:16px}
+  .about-grid2{grid-template-columns:1fr 1fr}
+  .footer-main{grid-template-columns:1fr;gap:32px}
+  footer{padding:40px 20px 24px}.cf-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">RD</div>
+    <div>
+      <div class="logo-name">Rafiy Digital</div>
+      <span class="logo-sub">New York City</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Start a Project</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="glow"></div>
+  <div class="glow2"></div>
+  <div class="hero-inner">
+    <div class="avail">
+      <div class="avail-dot"></div>
+      <span class="avail-text">Now accepting new clients</span>
+    </div>
+    <h1 class="hero-h1">
+      Your Business<br>
+      <span class="outline">Deserves a</span><br>
+      <span class="hi">Better Website.</span>
+    </h1>
+    <p class="hero-sub"><b>Rafiy Digital</b> is a New York City web and brand studio. We build fast, modern websites and brand identities for businesses that want to stand out — at prices that actually make sense.</p>
+    <div class="hero-btns">
+      <a href="#work" class="btn btn-teal">See Our Work</a>
+      <a href="#contact" class="btn btn-outline">Get a Free Quote</a>
+    </div>
+    <div class="hstats">
+      <div class="hstat"><div class="hstat-n">48hr</div><div class="hstat-l">Avg Delivery</div></div>
+      <div class="hstat"><div class="hstat-n">100%</div><div class="hstat-l">Satisfaction Rate</div></div>
+      <div class="hstat"><div class="hstat-n">$0</div><div class="hstat-l">Hidden Fees</div></div>
+      <div class="hstat"><div class="hstat-n">NYC</div><div class="hstat-l">Based & Available</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Web Design <span class="ticker-hi">·</span></span>
+    <span class="ticker-item">Brand Identity <span class="ticker-hi">·</span></span>
+    <span class="ticker-item" style="color:rgba(0,229,200,0.45)">NYC Studio <span class="ticker-hi">·</span></span>
+    <span class="ticker-item">SEO & Copywriting <span class="ticker-hi">·</span></span>
+    <span class="ticker-item">Logo Design <span class="ticker-hi">·</span></span>
+    <span class="ticker-item" style="color:rgba(0,229,200,0.45)">AI-Powered <span class="ticker-hi">·</span></span>
+    <span class="ticker-item">Social Media <span class="ticker-hi">·</span></span>
+    <span class="ticker-item">48hr Turnaround <span class="ticker-hi">·</span></span>
+    <span class="ticker-item">Web Design <span class="ticker-hi">·</span></span>
+    <span class="ticker-item">Brand Identity <span class="ticker-hi">·</span></span>
+    <span class="ticker-item" style="color:rgba(0,229,200,0.45)">NYC Studio <span class="ticker-hi">·</span></span>
+    <span class="ticker-item">SEO & Copywriting <span class="ticker-hi">·</span></span>
+    <span class="ticker-item">Logo Design <span class="ticker-hi">·</span></span>
+    <span class="ticker-item" style="color:rgba(0,229,200,0.45)">AI-Powered <span class="ticker-hi">·</span></span>
+    <span class="ticker-item">Social Media <span class="ticker-hi">·</span></span>
+    <span class="ticker-item">48hr Turnaround <span class="ticker-hi">·</span></span>
+  </div>
+</div>
+
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="svc-intro">
+      <div>
+        <div class="stag rv">What We Do</div>
+        <h2 class="h2 rv">Everything You Need<br>Online — <em>Done Right.</em></h2>
+      </div>
+      <p class="svc-lead rv">From your first logo to a full website launch — we handle your entire digital presence. Fast delivery, transparent pricing, real results.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="scard rv"><div class="scard-num">01</div><span class="scard-icon">🌐</span><div class="scard-name">Website Design & Development</div><div class="scard-desc">Custom, fully responsive websites built from scratch. No templates — real code that loads fast and looks elite on every device.</div><div class="scard-price">Starting at $350</div></div>
+      <div class="scard rv d1"><div class="scard-num">02</div><span class="scard-icon">✦</span><div class="scard-name">Logo & Brand Identity</div><div class="scard-desc">A logo, color system, and brand guide that makes your business instantly recognizable. Delivered in 48 hours.</div><div class="scard-price">Starting at $150</div></div>
+      <div class="scard rv d2"><div class="scard-num">03</div><span class="scard-icon">📝</span><div class="scard-name">Copywriting & SEO</div><div class="scard-desc">Words that sell and pages that rank on Google. We write all your website copy, meta descriptions, and content.</div><div class="scard-price">Starting at $100</div></div>
+      <div class="scard rv"><div class="scard-num">04</div><span class="scard-icon">📱</span><div class="scard-name">Social Media Content</div><div class="scard-desc">30 days of ready-to-post captions and content strategy for Instagram, TikTok, and LinkedIn.</div><div class="scard-price">Starting at $200/mo</div></div>
+      <div class="scard rv d1"><div class="scard-num">05</div><span class="scard-icon">📍</span><div class="scard-name">Google Business Setup</div><div class="scard-desc">Get on Google Maps and show up in local searches. Full profile setup so customers find you first.</div><div class="scard-price">Starting at $100</div></div>
+      <div class="scard scard-star rv d2"><div class="scard-num" style="color:var(--teal)">★</div><span class="scard-icon">🚀</span><div class="scard-name" style="color:var(--teal)">Full Brand Package</div><div class="scard-desc">Everything: website, logo, copy, SEO, social content, and Google Business. One price. One week. Complete.</div><div class="scard-price" style="font-size:12px">From $1,200 · Best Value</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="work-header">
+      <div>
+        <div class="stag rv">Portfolio</div>
+        <h2 class="h2 rv">Recent <em>Work</em></h2>
+      </div>
+      <p class="work-note rv">Three industries. Three different aesthetics. One studio that delivers.</p>
+    </div>
+    <div class="proj-list">
+      <a class="proj rv" href="gabay-bowler-final.html" target="_blank">
+        <div class="proj-n">001</div>
+        <div><div class="proj-name">Gabay & Bowler LLP</div><div class="proj-cat">Law Firm · Manhattan, New York City</div></div>
+        <div style="display:flex;align-items:center;gap:16px"><div class="proj-chips"><span class="chip">Web Design</span><span class="chip">Copywriting</span><span class="chip">Brand</span></div><span class="proj-arrow">→</span></div>
+      </a>
+      <a class="proj rv d1" href="porter-steakhouse-final.html" target="_blank">
+        <div class="proj-n">002</div>
+        <div><div class="proj-name">Porter NYC</div><div class="proj-cat">Steakhouse · Midtown Manhattan</div></div>
+        <div style="display:flex;align-items:center;gap:16px"><div class="proj-chips"><span class="chip">Web Design</span><span class="chip">Menu</span><span class="chip">Reservations</span></div><span class="proj-arrow">→</span></div>
+      </a>
+      <a class="proj rv d2" href="apex-fitness-final.html" target="_blank">
+        <div class="proj-n">003</div>
+        <div><div class="proj-name">APEX Fitness NYC</div><div class="proj-cat">Elite Gym · Tribeca, New York City</div></div>
+        <div style="display:flex;align-items:center;gap:16px"><div class="proj-chips"><span class="chip">Web Design</span><span class="chip">Scheduling</span><span class="chip">Membership</span></div><span class="proj-arrow">→</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="process">
+  <div class="wrap">
+    <div class="stag rv">How It Works</div>
+    <h2 class="h2 rv">From First Message<br>to <em>Live Website</em> — Fast.</h2>
+    <div class="process-grid">
+      <div class="step rv"><div class="step-bg">01</div><span class="step-icon">💬</span><div class="step-title">We Talk</div><div class="step-desc">Tell me about your business and goals. No long forms — just a message and we figure it out together.</div><div class="step-time">Day 1</div></div>
+      <div class="step rv d1"><div class="step-bg">02</div><span class="step-icon">🎨</span><div class="step-title">I Design</div><div class="step-desc">I build your website, logo, or content. You receive a preview link within 48 hours to review every detail.</div><div class="step-time">Day 2–3</div></div>
+      <div class="step rv d2"><div class="step-bg">03</div><span class="step-icon">✏️</span><div class="step-title">We Refine</div><div class="step-desc">We go back and forth until it's exactly right. Unlimited revisions — I don't stop until you love it.</div><div class="step-time">Day 3–5</div></div>
+      <div class="step rv d3"><div class="step-bg">04</div><span class="step-icon">🚀</span><div class="step-title">We Launch</div><div class="step-desc">Your site goes live. I handle deployment, testing, and making sure it's perfect on every screen.</div><div class="step-time">Day 5–7</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="pricing">
+  <div class="wrap">
+    <div class="stag rv">Pricing</div>
+    <h2 class="h2 rv">Simple Pricing.<br><em>No Surprises.</em></h2>
+    <div class="pkg-grid">
+      <div class="pkg rv">
+        <div class="pkg-tier">Starter</div>
+        <div class="pkg-price">$350</div>
+        <div class="pkg-note">One-time · delivered in 48hrs</div>
+        <div class="pkg-features">
+          <div class="pkf">Custom website up to 5 pages</div>
+          <div class="pkf">Mobile responsive on all devices</div>
+          <div class="pkf">Professional copywriting included</div>
+          <div class="pkf">Contact form setup</div>
+          <div class="pkf">2 rounds of revisions</div>
+        </div>
+        <a href="#contact" class="pkg-btn">Get Started</a>
+      </div>
+      <div class="pkg pkg-hot rv d1">
+        <div class="pkg-badge">Most Popular</div>
+        <div class="pkg-tier">Growth</div>
+        <div class="pkg-price">$700</div>
+        <div class="pkg-note">One-time · delivered in 5 days</div>
+        <div class="pkg-features">
+          <div class="pkf">Everything in Starter</div>
+          <div class="pkf">Custom logo & brand identity</div>
+          <div class="pkf">Full SEO optimization</div>
+          <div class="pkf">Google Business profile setup</div>
+          <div class="pkf">Unlimited revisions</div>
+        </div>
+        <a href="#contact" class="pkg-btn">Get Started</a>
+      </div>
+      <div class="pkg rv d2">
+        <div class="pkg-tier">Full Brand</div>
+        <div class="pkg-price">$1,200</div>
+        <div class="pkg-note">One-time · delivered in 1 week</div>
+        <div class="pkg-features">
+          <div class="pkf">Everything in Growth</div>
+          <div class="pkf">30-day social media content pack</div>
+          <div class="pkf">3 email marketing campaigns</div>
+          <div class="pkf">Monthly maintenance option</div>
+          <div class="pkf">Priority support ongoing</div>
+        </div>
+        <a href="#contact" class="pkg-btn">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="stag rv">Who's Behind This</div>
+    <h2 class="h2 rv">A New Yorker Who<br>Builds Things <em>Right.</em></h2>
+    <div class="about-grid">
+      <div class="rv">
+        <div class="about-card">
+          <div class="about-card-bg">RD</div>
+          <div class="about-initials">LR</div>
+          <div class="about-name">Lucas Rafiy</div>
+          <div class="about-role">Founder · Rafiy Digital</div>
+          <div class="about-card-bio">Born and raised in New York City. I started Rafiy Digital because I kept seeing great local businesses with terrible online presence — and knew I could fix that. I leverage cutting-edge AI tools alongside my own design and strategy skills to deliver big-agency quality at a fraction of the cost.</div>
+          <div class="about-chips">
+            <span class="achip">NYC Native</span>
+            <span class="achip">Web Design</span>
+            <span class="achip">AI-Powered</span>
+            <span class="achip">Fast Delivery</span>
+          </div>
+        </div>
+      </div>
+      <div class="rv d1">
+        <div class="about-text">
+          <p>I'm based in <b>New York City</b> and I started Rafiy Digital with one goal: give small businesses access to professional digital presence that was previously only available to companies with huge budgets.</p>
+          <p>I build every project personally using <b>the latest AI tools</b> — which means I can move faster, iterate quicker, and deliver work that rivals agencies charging 10x more. AI handles the heavy lifting. My eye handles the quality.</p>
+          <p>I work with businesses across <b>every industry</b> — law firms, restaurants, gyms, retail shops, service providers. If you have customers, you need a website that actually converts them.</p>
+        </div>
+        <div class="about-grid2">
+          <div class="agstat"><div class="agstat-n">NYC</div><div class="agstat-l">Born & Raised</div></div>
+          <div class="agstat"><div class="agstat-n">48hr</div><div class="agstat-l">Avg Turnaround</div></div>
+          <div class="agstat"><div class="agstat-n">100%</div><div class="agstat-l">Custom Work</div></div>
+          <div class="agstat"><div class="agstat-n">$0</div><div class="agstat-l">Hidden Fees</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contact" style="border-bottom:none">
+  <div class="wrap">
+    <div class="stag rv">Get In Touch</div>
+    <h2 class="h2 rv">Let's Build Something<br><em>Great Together.</em></h2>
+    <div class="contact-grid">
+      <div class="rv">
+        <div class="cinfo">
+          <div class="ci"><div class="ci-icon">📍</div><div><div class="ci-lbl">Based In</div><div class="ci-val">New York City, New York</div></div></div>
+          <div class="ci"><div class="ci-icon">✉️</div><div><div class="ci-lbl">Email</div><div class="ci-val"><a href="mailto:lucasrafiy@gmail.com">lucasrafiy@gmail.com</a></div></div></div>
+          <div class="ci"><div class="ci-icon">⚡</div><div><div class="ci-lbl">Response Time</div><div class="ci-val">Within 24 hours — usually same day</div></div></div>
+          <div class="ci"><div class="ci-icon">✅</div><div><div class="ci-lbl">Availability</div><div class="ci-val">Currently open to new projects</div></div></div>
+        </div>
+        <div class="cnotice"><p><b>Not sure what you need?</b> That's fine. Tell me about your business and I'll recommend the right option. No pressure, no sales pitch — just honest advice.</p></div>
+      </div>
+      <div class="rv d1">
+        <div class="cform">
+          <div class="cf-row">
+            <div class="cf"><label>First Name</label><input type="text" placeholder="John"></div>
+            <div class="cf"><label>Last Name</label><input type="text" placeholder="Smith"></div>
+          </div>
+          <div class="cf"><label>Email Address</label><input type="email" placeholder="john@yourbusiness.com"></div>
+          <div class="cf"><label>Business Name</label><input type="text" placeholder="Smith's Restaurant"></div>
+          <div class="cf"><label>I'm Interested In</label>
+            <select>
+              <option>Starter Package — Website ($350)</option>
+              <option>Growth Package — Website + Brand ($700)</option>
+              <option>Full Brand Package ($1,200)</option>
+              <option>Logo Design Only ($150)</option>
+              <option>Social Media Content ($200/mo)</option>
+              <option>Not Sure Yet — Let's Talk</option>
+            </select>
+          </div>
+          <div class="cf"><label>Tell Me About Your Business</label><textarea placeholder="What do you do, who are your customers, and what's your biggest challenge online right now?"></textarea></div>
+          <button class="csub">Send Message →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-main">
+    <div>
+      <div class="footer-mark">RD</div>
+      <div class="footer-brand">Rafiy Digital</div>
+      <div class="footer-desc">New York City Web & Brand Studio.<br>Fast. Professional. Built to convert.</div>
+    </div>
+    <div>
+      <div class="fcol-title">Navigate</div>
+      <div class="fcol-links">
+        <a href="#services">Services</a><a href="#work">Work</a>
+        <a href="#process">Process</a><a href="#pricing">Pricing</a>
+        <a href="#about">About</a><a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div class="fcol-title">Contact</div>
+      <div class="fcol-links">
+        <a href="mailto:lucasrafiy@gmail.com">lucasrafiy@gmail.com</a>
+        <a href="#contact">Start a Project</a>
+        <a href="#work">View Portfolio</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Rafiy Digital · New York City · All Rights Reserved</span>
+    <span class="footer-right">AI-Powered · Human Quality</span>
+  </div>
+</footer>
+
+<script>
+// CURSOR — instant dot, tight ring follow
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY},{passive:true});
+function loop(){
+  cur.style.transform=`translate(${mx-5}px,${my-5}px)`;
+  rx+=(mx-rx)*0.3; ry+=(my-ry)*0.3;
+  ring.style.transform=`translate(${rx-18}px,${ry-18}px)`;
+  requestAnimationFrame(loop);
+}
+loop();
+
+// SCROLL REVEAL
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on')}),{threshold:0.07});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// ACTIVE NAV
+const secs=document.querySelectorAll('section[id]');
+const navAs=document.querySelectorAll('.nav-links a:not(.nav-cta)');
+window.addEventListener('scroll',()=>{
+  let c='';
+  secs.forEach(s=>{if(scrollY>=s.offsetTop-80)c=s.id});
+  navAs.forEach(a=>{a.style.color=a.getAttribute('href')===`#${c}`?'var(--teal)':''});
+},{passive:true});
+</script>
+</body>
+</html>
